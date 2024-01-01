@@ -15,7 +15,7 @@ The engine uses the structure of trie.
 
 ## Info to Self
 ### Command Lines
-compile -- g++ -O2 -std=c++17 -o essay_search main.cpp
+compile -- g++ -O2 -std=c++17 -o essay_search main.cpp <br />
 execute -- ./essay_search ./data_folder ./query_path ./output_path
 
 ## Reference
