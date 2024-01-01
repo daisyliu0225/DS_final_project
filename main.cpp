@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 
 	q_fi.open("query.txt", ios::in);
 
-
+	cout<<endl;
 	cout<<" query.txt "<<endl;
 	while(getline(q_fi, q_tmp)){
 
