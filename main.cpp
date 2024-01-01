@@ -6,6 +6,7 @@
 #include<iostream>
 
 using namespace std;
+const int ALPHABET_SIZE = 26;
 
 // Utility Func
 
@@ -43,6 +44,73 @@ vector<string> split(const string& str, const string& delim) {
 	return res;
 }
 
+//trie functions
+struct TrieNode
+{
+	struct TrieNode *children[ALPHABET_SIZE];
+
+	// isEndOfWord is true if the node represents
+	// end of a word
+	bool isEndOfWord;
+};
+
+// Returns new trie node (initialized to NULLs)
+struct TrieNode *getNode(void)
+{
+	struct TrieNode *pNode = new TrieNode;
+
+	pNode->isEndOfWord = false;
+
+	for (int i = 0; i < ALPHABET_SIZE; i++)
+		pNode->children[i] = NULL;
+
+	return pNode;
+}
+
+// If not present, inserts key into trie
+// If the key is prefix of trie node, just
+// marks leaf node
+void insert(struct TrieNode *root, string key)
+{
+	struct TrieNode *pCrawl = root;
+
+	for (int i = 0; i < key.length(); i++)
+	{
+		int index;
+		if(key[i]<='Z' && key[i]>='A') index = key[i] - 'A'; //A->0 ... Z->25
+		else if(key[i]<='z' && key[i]>='a') index = key[i] - 'a'; //a -> 0, z->25
+		
+		if (!pCrawl->children[index])
+			pCrawl->children[index] = getNode();
+
+		pCrawl = pCrawl->children[index];
+	}
+
+	// mark last node as leaf
+	pCrawl->isEndOfWord = true;
+}
+
+// Returns true if key presents in trie, else
+// false
+bool search(struct TrieNode *root, string key)
+{
+	struct TrieNode *pCrawl = root;
+
+	for (int i = 0; i < key.length(); i++)
+	{
+		int index;
+		if(key[i]<='Z' && key[i]>='A') index = key[i] - 'A'; //A->0 ... Z->25
+		else if(key[i]<='z' && key[i]>='a') index = key[i] - 'a'; //a -> 26 , z->51
+
+		if (!pCrawl->children[index])
+			return false;
+
+		pCrawl = pCrawl->children[index];
+	}
+
+	return (pCrawl->isEndOfWord);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -59,13 +127,9 @@ int main(int argc, char *argv[])
 	// Read File & Parser Example
 
 
-	string file, title_name, tmp; //the strings of parsing the data file
-	fstream fi; //to open a file in the data
-	vector<string> tmp_string; //parse the data file
-
-	string q_file, qu, q_tmp; //the strings of parsing the query file
-	fstream q_fi; //to open the query file
-	vector<string> q_tmp_string; //parse the query file
+	string file, title_name, tmp;
+	fstream fi;
+	vector<string> tmp_string;
 
 	// from data_dir get file ....
 	// eg : use 0.txt in data directory
@@ -84,43 +148,36 @@ int main(int argc, char *argv[])
 	// }
 
     // GET CONTENT LINE BY LINE
+	vector<string> content;
+	struct TrieNode *root = getNode();
+
 	while(getline(fi, tmp)){
 
         // GET CONTENT WORD VECTOR
 		tmp_string = split(tmp, " ");
 
 		// PARSE CONTENT
-		vector<string> content = word_parse(tmp_string);
+		content = word_parse(tmp_string);
 
 		for(auto &word : content){
+			insert(root, word);
 			cout << word << endl;
 		}
-		//......
+
 	}
 
     // CLOSE FILE
 	fi.close();
+	char out[][32] = {"Not present in trie", "Present in trie"};
 
-	q_fi.open("query.txt", ios::in);
-
-	cout<<endl;
-	cout<<" query.txt "<<endl;
-	while(getline(q_fi, q_tmp)){
-
-        // GET CONTENT WORD VECTOR
-		q_tmp_string = split(q_tmp, " ");
-
-		// PARSE CONTENT
-		vector<string> content = word_parse(q_tmp_string);
-
-		for(auto &qword : content){
-			cout << qword << endl;
-		}
-		//......
-	}
-
-	q_fi.close();
+	// Search for different keys
+	cout<<"the"<<" --- "<<out[search(root, "the")]<<endl;
+	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
+	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;
+	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;
 }
+
+
 
 
 // 1. UPPERCASE CHARACTER & LOWERCASE CHARACTER ARE SEEN AS SAME.
