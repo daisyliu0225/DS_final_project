@@ -6,5 +6,5 @@ The program is written by daisyliu0225.
 ## Versions
 | Version | Date | Description |
 |---|---|---|
-|0| 2023/12/28| making sure that everything runs in the program|
-
+|0|2023/12/28| making sure that everything runs in the program |
+|1|2024/01/01| putting 0.txt into a trie tree but the testcase is fixed|
