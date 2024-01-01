@@ -75,9 +75,10 @@ int main(int argc, char *argv[])
 
 	vector<string> title = word_parse(tmp_string);
 
-	// for(auto &word : title){
-	// 	cout << word << endl;
-	// }
+	//for(auto &word : title){
+	//	cout << word << endl;
+	//}
+
 
     // GET CONTENT LINE BY LINE
 	while(getline(fi, tmp)){
