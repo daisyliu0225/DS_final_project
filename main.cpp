@@ -59,9 +59,13 @@ int main(int argc, char *argv[])
 	// Read File & Parser Example
 
 
-	string file, title_name, tmp;
-	fstream fi;
-	vector<string> tmp_string;
+	string file, title_name, tmp; //the strings of parsing the data file
+	fstream fi; //to open a file in the data
+	vector<string> tmp_string; //parse the data file
+
+	string q_file, qu, q_tmp; //the strings of parsing the query file
+	fstream q_fi; //to open the query file
+	vector<string> q_tmp_string; //parse the query file
 
 	// from data_dir get file ....
 	// eg : use 0.txt in data directory
@@ -75,10 +79,9 @@ int main(int argc, char *argv[])
 
 	vector<string> title = word_parse(tmp_string);
 
-	//for(auto &word : title){
-	//	cout << word << endl;
-	//}
-
+	// for(auto &word : title){
+	// 	cout << word << endl;
+	// }
 
     // GET CONTENT LINE BY LINE
 	while(getline(fi, tmp)){
@@ -97,6 +100,26 @@ int main(int argc, char *argv[])
 
     // CLOSE FILE
 	fi.close();
+
+	q_fi.open("query.txt", ios::in);
+
+
+	cout<<" query.txt "<<endl;
+	while(getline(q_fi, q_tmp)){
+
+        // GET CONTENT WORD VECTOR
+		q_tmp_string = split(q_tmp, " ");
+
+		// PARSE CONTENT
+		vector<string> content = word_parse(q_tmp_string);
+
+		for(auto &qword : content){
+			cout << qword << endl;
+		}
+		//......
+	}
+
+	q_fi.close();
 }
 
 
