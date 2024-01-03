@@ -4,8 +4,10 @@
 #include<cstring>
 #include<vector>
 #include<iostream>
-#include<dirent.h>
-#include<sys/types.h>
+#include <dirent.h> //it is fine, ignore
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 using namespace std;
 const int ALPHABET_SIZE = 26;
@@ -122,44 +124,49 @@ int main(int argc, char *argv[])
 	// 2. number of txt files
 	// 3. output route
 
-    string data_dir = argv[1] + string("/");
-	string query = string(argv[2]);
-	string output = string(argv[3]);
-
-	// Read File & Parser Example
-
-   DIR *dr;
-   struct dirent *en;
-   dr = opendir("data"); //open data directory
-   if (dr) {
-      while ((en = readdir(dr)) != NULL) {
-         cout<<" \n"<<en->d_name; //print all directory name
-      }
-      closedir(dr); //close all directory
-   }
+    //string data_dir = argv[1] + string("/");
+	//string query = string(argv[2]);
+	//string output = string(argv[3]);
 
 	string file, title_name, tmp;
 	fstream fi;
 	vector<string> tmp_string;
+	DIR *dr;
+	struct dirent *en;
+	dr = opendir("data"); //open data directory
+	if (dr) {
+		while ((en = readdir(dr)) != NULL) {
+			fi.open(en->d_name.c_str(), ios::in);
+			getline(fi, title_name);
+			tmp_string = split(title_name, " ");
+			vector<string> title = word_parse(tmp_string);
+			for(auto &word : title){
+	 			cout << word << endl;
+	 		}
+			fi.close();
+		}
+		closedir(dr); //close all directory
+	}
+
 
 	// from data_dir get file ....
 	// eg : use 0.txt in data directory
-	fi.open("data/0.txt", ios::in);
+	//fi.open("data/0.txt", ios::in);
 
     // GET TITLENAME
-	getline(fi, title_name);
+	//getline(fi, title_name);
 
     // GET TITLENAME WORD ARRAY
-    tmp_string = split(title_name, " ");
+    //tmp_string = split(title_name, " ");
 
-	vector<string> title = word_parse(tmp_string);
+	//vector<string> title = word_parse(tmp_string);
 
 	// for(auto &word : title){
 	// 	cout << word << endl;
-	// }
+	// }*/
 
     // GET CONTENT LINE BY LINE
-	vector<string> content;
+	/*vector<string> content;
 	struct TrieNode *root = getNode();
 
 	while(getline(fi, tmp)){
@@ -170,22 +177,22 @@ int main(int argc, char *argv[])
 		// PARSE CONTENT
 		content = word_parse(tmp_string);
 
-		for(auto &word : content){
+		/*for(auto &word : content){
 			insert(root, word);
 			cout << word << endl;
-		}
+		}*/
 
-	}
+	//}
 
     // CLOSE FILE
-	fi.close();
-	char out[][32] = {"Not present in trie", "Present in trie"};
+	//fi.close();
+	/*char out[][32] = {"Not present in trie", "Present in trie"};
 
 	// Search for different keys
 	cout<<"the"<<" --- "<<out[search(root, "the")]<<endl;
 	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
 	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;
-	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;
+	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;*/
 }
 
 
