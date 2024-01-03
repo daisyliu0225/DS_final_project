@@ -4,6 +4,7 @@
 #include<cstring>
 #include<vector>
 #include<iostream>
+
 #include <dirent.h> //it is fine, ignore
 #include <unistd.h>
 #include <sys/stat.h>
@@ -130,23 +131,29 @@ int main(int argc, char *argv[])
 
 	string file, title_name, tmp;
 	fstream fi;
+	string dir, filepath;
 	vector<string> tmp_string;
+	struct dirent *dirp;
 	DIR *dr;
-	struct dirent *en;
+	dir = "data";
 	dr = opendir("data"); //open data directory
-	if (dr) {
-		while ((en = readdir(dr)) != NULL) {
-			fi.open(en->d_name.c_str(), ios::in);
-			getline(fi, title_name);
+
+  	while ((dirp = readdir(dr)))
+    {
+    	filepath = dir + "/" + dirp->d_name;
+
+    	// Endeavor to read a single number from the file and display it
+    	fi.open(filepath.c_str());
+    	getline(fi, title_name);
 			tmp_string = split(title_name, " ");
 			vector<string> title = word_parse(tmp_string);
 			for(auto &word : title){
 	 			cout << word << endl;
 	 		}
-			fi.close();
-		}
-		closedir(dr); //close all directory
-	}
+    	fi.close();
+    }
+  	closedir(dr);
+
 
 
 	// from data_dir get file ....
