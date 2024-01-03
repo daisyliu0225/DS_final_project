@@ -133,6 +133,8 @@ int main(int argc, char *argv[])
 	fstream fi;
 	string dir, filepath;
 	vector<string> tmp_string;
+	vector<string> title;
+	vector<vector<string>> title_table;
 	struct dirent *dirp;
 	DIR *dr;
 	dir = "data";
@@ -141,20 +143,22 @@ int main(int argc, char *argv[])
   	while ((dirp = readdir(dr)))
     {
     	filepath = dir + "/" + dirp->d_name;
-
     	// Endeavor to read a single number from the file and display it
     	fi.open(filepath.c_str());
     	getline(fi, title_name);
-			tmp_string = split(title_name, " ");
-			vector<string> title = word_parse(tmp_string);
-			for(auto &word : title){
-	 			cout << word << endl;
-	 		}
+		tmp_string = split(title_name, " ");
+		title = word_parse(tmp_string);
+		title_table.push_back(title);
     	fi.close();
     }
   	closedir(dr);
 
-
+	for(int i=0;i<title_table.size();i++){
+		for(int j=0;j<title_table[i].size();j++){
+			cout<<title_table[i][j];
+		}
+		cout<<endl;
+	}
 
 	// from data_dir get file ....
 	// eg : use 0.txt in data directory
