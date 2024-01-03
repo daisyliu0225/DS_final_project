@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 
 	for(int i=0;i<title_table.size();i++){
 		for(int j=0;j<title_table[i].size();j++){
-			cout<<title_table[i][j];
+			cout<<title_table[i][j]<<" ";
 		}
 		cout<<endl;
 	}
