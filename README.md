@@ -12,6 +12,9 @@ The engine uses the structure of trie.
 |---|---|---|
 |0|2023/12/28| making sure that everything runs in the program |
 |1|2024/01/01| putting 0.txt into a trie tree but the testcase is fixed|
+|2|2024/01/03| reading folder and output the titles|
+|3|2024/01/03| reading folder and read the files in the folder|
+|4, 5|2024/01/03| reading folder and save the title of the data into a vector|
 
 ## Info to Self
 ### Command Lines
