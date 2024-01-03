@@ -4,6 +4,8 @@
 #include<cstring>
 #include<vector>
 #include<iostream>
+#include<dirent.h>
+#include<sys/types.h>
 
 using namespace std;
 const int ALPHABET_SIZE = 26;
@@ -126,6 +128,15 @@ int main(int argc, char *argv[])
 
 	// Read File & Parser Example
 
+   DIR *dr;
+   struct dirent *en;
+   dr = opendir("data"); //open data directory
+   if (dr) {
+      while ((en = readdir(dr)) != NULL) {
+         cout<<" \n"<<en->d_name; //print all directory name
+      }
+      closedir(dr); //close all directory
+   }
 
 	string file, title_name, tmp;
 	fstream fi;
