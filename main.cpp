@@ -3,6 +3,8 @@
 #include<string>
 #include<cstring>
 #include<vector>
+#include<algorithm>
+#include<set>
 #include<iostream>
 
 #include <dirent.h> //it is fine, ignore
@@ -57,6 +59,9 @@ struct TrieNode
 	// isEndOfWord is true if the node represents
 	// end of a word
 	bool isEndOfWord;
+
+	//UsedPara
+	std::vector<int> UsedPara;
 };
 
 // Returns new trie node (initialized to NULLs)
@@ -75,7 +80,7 @@ struct TrieNode *getNode(void)
 // If not present, inserts key into trie
 // If the key is prefix of trie node, just
 // marks leaf node
-void insert(struct TrieNode *root, string key)
+void insert(struct TrieNode *root, string key, int para)
 {
 	struct TrieNode *pCrawl = root;
 
@@ -93,6 +98,10 @@ void insert(struct TrieNode *root, string key)
 
 	// mark last node as leaf
 	pCrawl->isEndOfWord = true;
+
+	std::vector<int>::iterator it;
+	it = find(pCrawl->UsedPara.begin() ,pCrawl->UsedPara.end(), para);
+	if(it == pCrawl->UsedPara.end()) pCrawl->UsedPara.push_back(para);
 }
 
 // Returns true if key presents in trie, else
@@ -111,6 +120,12 @@ bool search(struct TrieNode *root, string key)
 			return false;
 
 		pCrawl = pCrawl->children[index];
+	}
+
+	if(pCrawl->isEndOfWord == true){
+		int sz = pCrawl->UsedPara.size();
+		for(int i=0;i<sz;i++) cout<<pCrawl->UsedPara[i]<<" ";
+		cout<<endl;
 	}
 
 	return (pCrawl->isEndOfWord);
@@ -140,6 +155,9 @@ int main(int argc, char *argv[])
 	dir = "data";
 	dr = opendir("data"); //open data directory
 
+	struct TrieNode *root = getNode();
+	vector<string> content;
+	int counter = 0;
   	while ((dirp = readdir(dr)))
     {
     	filepath = dir + "/" + dirp->d_name;
@@ -149,16 +167,28 @@ int main(int argc, char *argv[])
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
 		title_table.push_back(title);
+
+		while(getline(fi, tmp)){
+			tmp_string = split(tmp, " ");
+
+			// PARSE CONTENT
+			content = word_parse(tmp_string);
+
+			for(auto &word : content){
+				insert(root, word, counter);
+			}
+		}
     	fi.close();
+		counter++;
     }
   	closedir(dr);
 
-	for(int i=0;i<title_table.size();i++){
+	/*for(int i=0;i<title_table.size();i++){
 		for(int j=0;j<title_table[i].size();j++){
 			cout<<title_table[i][j]<<" ";
 		}
 		cout<<endl;
-	}
+	}*/
 
 	// from data_dir get file ....
 	// eg : use 0.txt in data directory
@@ -197,13 +227,13 @@ int main(int argc, char *argv[])
 
     // CLOSE FILE
 	//fi.close();
-	/*char out[][32] = {"Not present in trie", "Present in trie"};
+	char out[][32] = {"Not present in trie", "Present in trie"};
 
 	// Search for different keys
 	cout<<"the"<<" --- "<<out[search(root, "the")]<<endl;
 	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
 	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;
-	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;*/
+	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;
 }
 
 
