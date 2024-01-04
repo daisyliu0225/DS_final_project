@@ -106,7 +106,7 @@ void insert(struct TrieNode *root, string key, int para)
 
 // Returns true if key presents in trie, else
 // false
-bool search(struct TrieNode *root, string key)
+bool search(struct TrieNode *root, string key, vector<vector<string>> title_table)
 {
 	struct TrieNode *pCrawl = root;
 
@@ -124,8 +124,17 @@ bool search(struct TrieNode *root, string key)
 
 	if(pCrawl->isEndOfWord == true){
 		int sz = pCrawl->UsedPara.size();
-		for(int i=0;i<sz;i++) cout<<pCrawl->UsedPara[i]<<" ";
-		cout<<endl;
+		for(int i=0;i<sz;i++){
+			int seq = pCrawl->UsedPara[i];
+			for(int j=0;j<title_table.size();j++){
+				if(j == seq){
+					for(int k=0;k<title_table[seq].size();k++) cout<<title_table[j][k]<<" ";
+					cout<<endl;
+					break;
+				}
+			}
+		}
+
 	}
 
 	return (pCrawl->isEndOfWord);
@@ -183,57 +192,12 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
-	/*for(int i=0;i<title_table.size();i++){
-		for(int j=0;j<title_table[i].size();j++){
-			cout<<title_table[i][j]<<" ";
-		}
-		cout<<endl;
-	}*/
-
-	// from data_dir get file ....
-	// eg : use 0.txt in data directory
-	//fi.open("data/0.txt", ios::in);
-
-    // GET TITLENAME
-	//getline(fi, title_name);
-
-    // GET TITLENAME WORD ARRAY
-    //tmp_string = split(title_name, " ");
-
-	//vector<string> title = word_parse(tmp_string);
-
-	// for(auto &word : title){
-	// 	cout << word << endl;
-	// }*/
-
-    // GET CONTENT LINE BY LINE
-	/*vector<string> content;
-	struct TrieNode *root = getNode();
-
-	while(getline(fi, tmp)){
-
-        // GET CONTENT WORD VECTOR
-		tmp_string = split(tmp, " ");
-
-		// PARSE CONTENT
-		content = word_parse(tmp_string);
-
-		/*for(auto &word : content){
-			insert(root, word);
-			cout << word << endl;
-		}*/
-
-	//}
-
-    // CLOSE FILE
-	//fi.close();
-	char out[][32] = {"Not present in trie", "Present in trie"};
-
 	// Search for different keys
-	cout<<"the"<<" --- "<<out[search(root, "the")]<<endl;
+	search(root, "reflect", title_table);
+	/*cout<<"reflect"<<" --- "<<out[search(root, "reflect")]<<endl;
 	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
 	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;
-	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;
+	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;*/
 }
 
 
