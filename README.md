@@ -16,6 +16,7 @@ The engine uses the structure of trie.
 |3|2024/01/03| reading folder and read the files in the folder|
 |4, 5|2024/01/03| reading folder and save the title of the data into a vector|
 |6|2024/01/04|pushing the words in the paragraph into a trie with numbers and printing the numbers out when searching|
+|7|2024/01/04|can transfer the number into the title|
 
 ## Info to Self
 ### Command Lines
