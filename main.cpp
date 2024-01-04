@@ -149,9 +149,9 @@ int main(int argc, char *argv[])
 	// 2. number of txt files
 	// 3. output route
 
-    //string data_dir = argv[1] + string("/");
-	//string query = string(argv[2]);
-	//string output = string(argv[3]);
+    string data_dir = argv[1] + "/";
+	string query = string(argv[2]);
+	string output = string(argv[3]);
 
 	string file, title_name, tmp;
 	fstream fi;
@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
 	vector<vector<string>> title_table;
 	struct dirent *dirp;
 	DIR *dr;
-	dir = "data";
-	dr = opendir("data"); //open data directory
+	dir = data_dir;
+	dr = opendir(dir.c_str()); //open data directory
 
 	struct TrieNode *root = getNode();
 	vector<string> content;
