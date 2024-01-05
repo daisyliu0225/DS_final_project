@@ -18,7 +18,7 @@ The engine uses the structure of trie.
 |6|2024/01/04|pushing the words in the paragraph into a trie with numbers and printing the numbers out when searching|
 |7|2024/01/04|can transfer the number into the title|
 |8|2024/01/04|making the folder path able to input by user|
-|9|2024/01/05|release the menory of the trie tree at the end of the program|
+|9|2024/01/05|release the memory of the trie tree at the end of the program|
 
 ## Info to Self
 ### Command Lines
