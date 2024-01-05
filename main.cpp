@@ -140,6 +140,17 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 	return (pCrawl->isEndOfWord);
 }
 
+void del(struct TrieNode*root){
+	struct TrieNode *pCrawl = root;
+	for(int i=0;i<pCrawl->children.size();i++){
+		if (!pCrawl->children[i]){
+			delete pCrawl;
+		}
+
+		pCrawl = pCrawl->children[i];
+	}
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -149,10 +160,11 @@ int main(int argc, char *argv[])
 	// 2. number of txt files
 	// 3. output route
 
-    string data_dir = argv[1] + "/";
+    string data_dir = argv[1];
 	string query = string(argv[2]);
 	string output = string(argv[3]);
 
+	//code for reading in the data
 	string file, title_name, tmp;
 	fstream fi;
 	string dir, filepath;
@@ -192,8 +204,27 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
+	del(root);
+
+	/*fstream q_fi;
+	vector<string> q_tmp_string;
+	vector<vector<string>> queries;
+	string q_tmp;
+	q_fi.open(query.c_str(), ios::in);
+
+	while(getline(q_fi, q_tmp)){
+		q_tmp_string = split(q_tmp, " ");
+		vector<string> content = word_parse(q_tmp_string);
+		queries.push_back(content);
+	}
+
 	// Search for different keys
-	search(root, "reflect", title_table);
+	for(int i=0;i<queries.size();i++){
+		for(int j=0;j<queries[i].size();j++) search(root, queries[i][j].c_str(), title_table);
+	}
+
+	q_fi.close();*/
+
 	/*cout<<"reflect"<<" --- "<<out[search(root, "reflect")]<<endl;
 	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
 	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;

@@ -1,0 +1,3 @@
+/mnt/c/Users/Daisy/OneDrive/桌面/github_repos/DS_final_project/data
+/mnt/c/Users/Daisy/OneDrive/桌面/github_repos/DS_final_project/query
+/mnt/c/Users/Daisy/OneDrive/桌面/github_repos/DS_final_project/query_out
