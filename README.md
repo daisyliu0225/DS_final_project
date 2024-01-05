@@ -20,6 +20,7 @@ The engine uses the structure of trie.
 |8|2024/01/04|making the folder path able to input by user|
 |9|2024/01/05|release the memory of the trie tree at the end of the program|
 |10|2024/01/05|able to read from query file and find the words in the files|
+|11|2024/01/05|able to find the words in the file and output them into a file|
 
 ## Info to Self
 ### Command Lines
