@@ -172,10 +172,6 @@ int main(int argc, char *argv[])
 	string query = string(argv[2]);
 	string output = string(argv[3]);
 
-	cout<<argv[1]<<endl;
-	cout<<argv[2]<<endl;
-	cout<<argv[3]<<endl;
-
 	//code for reading in the data
 	string file, title_name, tmp;
 	fstream fi;
@@ -228,9 +224,6 @@ int main(int argc, char *argv[])
 		q_tmp_string = split(q_tmp, " ");
 		vector<string> content = word_parse(q_tmp_string);
 		queries.push_back(content);
-		for(auto &word:content){
-			cout<<word<<endl;
-		}
 	}
 
 	q_fi.close();
