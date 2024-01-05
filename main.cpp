@@ -106,7 +106,7 @@ void insert(struct TrieNode *root, string key, int para)
 
 // Returns true if key presents in trie, else
 // false
-bool search(struct TrieNode *root, string key, vector<vector<string>> title_table)
+bool search(struct TrieNode *root, string key, vector<vector<string>> title_table, fstream& outputfile)
 {
 	struct TrieNode *pCrawl = root;
 
@@ -128,8 +128,8 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 			int seq = pCrawl->UsedPara[i];
 			for(int j=0;j<title_table.size();j++){
 				if(j == seq){
-					for(int k=0;k<title_table[seq].size();k++) cout<<title_table[j][k]<<" ";
-					cout<<endl;
+					for(int k=0;k<title_table[seq].size();k++) outputfile<<title_table[j][k]<<" ";
+					outputfile<<endl;
 					break;
 				}
 			}
@@ -233,19 +233,20 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// Search for different keys
-	for(int i=0;i<queries.size();i++){
-		for(int j=0;j<queries[i].size();j++) search(root, queries[i][j].c_str(), title_table);
-	}
-
 	q_fi.close();
 
-	del(root);
 
-	/*cout<<"reflect"<<" --- "<<out[search(root, "reflect")]<<endl;
-	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
-	cout<<"their"<<" --- "<<out[search(root, "their")]<<endl;
-	cout<<"thaw"<<" --- "<<out[search(root, "thaw")]<<endl;*/
+
+	// Search for different keys
+	fstream outputfile;
+	outputfile.open(output.c_str(), ios::out);
+	for(int i=0;i<queries.size();i++){
+		for(int j=0;j<queries[i].size();j++) search(root, queries[i][j].c_str(), title_table, outputfile);
+	}
+
+	outputfile.close();
+
+	del(root);
 }
 
 
