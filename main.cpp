@@ -140,17 +140,25 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 	return (pCrawl->isEndOfWord);
 }
 
-void del(struct TrieNode*root){
-	struct TrieNode *pCrawl = root;
-	for(int i=0;i<ALPHABET_SIZE;i++){
-		if (!pCrawl->children[i]){
-			delete pCrawl;
-		}
-
-		pCrawl = pCrawl->children[i];
-	}
+bool isEmpty(TrieNode* root)
+{
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+        if (root->children[i])
+            return false;
+    return true;
 }
 
+void del(TrieNode* root)
+{
+	if (isEmpty(root)) {
+		delete (root);
+		root = NULL;
+	}else {
+		for(int i=0;i<ALPHABET_SIZE;i++){
+			if(root->children[i]) del(root->children[i]);
+		}
+	} 
+}
 
 int main(int argc, char *argv[])
 {
@@ -200,7 +208,7 @@ int main(int argc, char *argv[])
 			content = word_parse(tmp_string);
 
 			for(auto &word : content){
-				cout<<word<<endl;
+				//cout<<word<<endl;
 				insert(root, word, counter);
 			}
 		}
@@ -209,8 +217,7 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
-	//del(root);
-
+	del(root);
 	/*fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
