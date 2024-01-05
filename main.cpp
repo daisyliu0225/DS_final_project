@@ -164,6 +164,10 @@ int main(int argc, char *argv[])
 	string query = string(argv[2]);
 	string output = string(argv[3]);
 
+	cout<<argv[1]<<endl;
+	cout<<argv[2]<<endl;
+	cout<<argv[3]<<endl;
+
 	//code for reading in the data
 	string file, title_name, tmp;
 	fstream fi;
@@ -196,6 +200,7 @@ int main(int argc, char *argv[])
 			content = word_parse(tmp_string);
 
 			for(auto &word : content){
+				cout<<word<<endl;
 				insert(root, word, counter);
 			}
 		}
@@ -204,7 +209,7 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
-	del(root);
+	//del(root);
 
 	/*fstream q_fi;
 	vector<string> q_tmp_string;
