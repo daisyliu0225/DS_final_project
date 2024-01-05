@@ -142,7 +142,7 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 
 void del(struct TrieNode*root){
 	struct TrieNode *pCrawl = root;
-	for(int i=0;i<pCrawl->children.size();i++){
+	for(int i=0;i<ALPHABET_SIZE;i++){
 		if (!pCrawl->children[i]){
 			delete pCrawl;
 		}
