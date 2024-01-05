@@ -217,8 +217,8 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
-	del(root);
-	/*fstream q_fi;
+	
+	fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
 	string q_tmp;
@@ -228,6 +228,9 @@ int main(int argc, char *argv[])
 		q_tmp_string = split(q_tmp, " ");
 		vector<string> content = word_parse(q_tmp_string);
 		queries.push_back(content);
+		for(auto &word:content){
+			cout<<word<<endl;
+		}
 	}
 
 	// Search for different keys
@@ -235,7 +238,9 @@ int main(int argc, char *argv[])
 		for(int j=0;j<queries[i].size();j++) search(root, queries[i][j].c_str(), title_table);
 	}
 
-	q_fi.close();*/
+	q_fi.close();
+
+	del(root);
 
 	/*cout<<"reflect"<<" --- "<<out[search(root, "reflect")]<<endl;
 	cout<<"these"<<" --- "<<out[search(root, "these")]<<endl;
