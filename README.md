@@ -19,6 +19,7 @@ The engine uses the structure of trie.
 |7|2024/01/04|can transfer the number into the title|
 |8|2024/01/04|making the folder path able to input by user|
 |9|2024/01/05|release the memory of the trie tree at the end of the program|
+|10|2024/01/05|able to read from query file and find the words in the files|
 
 ## Info to Self
 ### Command Lines
@@ -27,7 +28,8 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 
 ## Reference
 1. [trie](https://www.geeksforgeeks.org/trie-insert-and-search/)
-2. [vector usage](https://www.geeksforgeeks.org/2d-vector-in-cpp-with-user-defined-size/)
-3. [vector usage-2](https://cplusplus.com/reference/vector/vector/)
-4. [read folder](https://cplusplus.com/forum/beginner/10292/)
-5. [find algo](https://cplusplus.com/reference/algorithm/find/)
+2. [trie delete](https://www.geeksforgeeks.org/trie-delete/)
+3. [vector usage](https://www.geeksforgeeks.org/2d-vector-in-cpp-with-user-defined-size/)
+4. [vector usage-2](https://cplusplus.com/reference/vector/vector/)
+5. [read folder](https://cplusplus.com/forum/beginner/10292/)
+6. [find algo](https://cplusplus.com/reference/algorithm/find/)
