@@ -28,7 +28,8 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 
 ## Reference
 1. [trie](https://www.geeksforgeeks.org/trie-insert-and-search/)
-2. [vector usage](https://www.geeksforgeeks.org/2d-vector-in-cpp-with-user-defined-size/)
-3. [vector usage-2](https://cplusplus.com/reference/vector/vector/)
-4. [read folder](https://cplusplus.com/forum/beginner/10292/)
-5. [find algo](https://cplusplus.com/reference/algorithm/find/)
+2. [trie delete](https://www.geeksforgeeks.org/trie-delete/)
+3. [vector usage](https://www.geeksforgeeks.org/2d-vector-in-cpp-with-user-defined-size/)
+4. [vector usage-2](https://cplusplus.com/reference/vector/vector/)
+5. [read folder](https://cplusplus.com/forum/beginner/10292/)
+6. [find algo](https://cplusplus.com/reference/algorithm/find/)
