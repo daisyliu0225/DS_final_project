@@ -19,6 +19,7 @@ The engine uses the structure of trie.
 |7|2024/01/04|can transfer the number into the title|
 |8|2024/01/04|making the folder path able to input by user|
 |9|2024/01/05|release the memory of the trie tree at the end of the program|
+|10|2024/01/05|able to read from query file and find the words in the files|
 
 ## Info to Self
 ### Command Lines
