@@ -34,3 +34,5 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 4. [vector usage-2](https://cplusplus.com/reference/vector/vector/)
 5. [read folder](https://cplusplus.com/forum/beginner/10292/)
 6. [find algo](https://cplusplus.com/reference/algorithm/find/)
+7. [fstream as function parameter](https://stackoverflow.com/questions/14503605/using-fstream-object-as-a-function-parameter)
+8. [fstream](https://cplusplus.com/doc/tutorial/files/)
