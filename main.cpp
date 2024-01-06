@@ -217,10 +217,20 @@ int main(int argc, char *argv[])
 	fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
+	vector<vector<int>> op;
 	string q_tmp;
 	q_fi.open(query.c_str(), ios::in);
 
 	while(getline(q_fi, q_tmp)){
+		int len = q_tmp.length();
+		for(int i=0;i<len;i++){
+			int num = q_tmp[i];
+			if(num == 34) op.push_back(34); //""
+			else if(num == 42) op.push_back(42); //*
+			else if(num == 43) op.push_back(43); //+
+			else if(num ==  47) op.push_back(47); // /
+			else if(num == 45) op.push_back(45); //-
+		}
 		q_tmp_string = split(q_tmp, " ");
 		vector<string> content = word_parse(q_tmp_string);
 		queries.push_back(content);
@@ -228,13 +238,22 @@ int main(int argc, char *argv[])
 
 	q_fi.close();
 
-
+	for(int i=0;i<op.size();i++){
+		for(int j=0;j<op[i].size();j++){
+			cout<<queries[i][j]<<" ";
+		}
+		cout<<endl;
+	}
 
 	// Search for different keys
 	fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
-		for(int j=0;j<queries[i].size();j++) search(root, queries[i][j].c_str(), title_table, outputfile);
+		for(int j=0;j<queries[i].size();j++){
+			cout<<queries[i][j]<<" ";
+			search(root, queries[i][j].c_str(), title_table, outputfile);
+		}
+		cout<<endl;
 	}
 
 	outputfile.close();
