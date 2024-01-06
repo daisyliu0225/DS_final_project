@@ -39,3 +39,6 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 8. [fstream as function parameter](https://stackoverflow.com/questions/14503605/using-fstream-object-as-a-function-parameter)
 9. [fstream](https://cplusplus.com/doc/tutorial/files/)
 10. [vector char and original char are different types](https://stackoverflow.com/questions/38513512/how-to-create-a-2-dimensional-matrix-of-char-using-vectors-in-c)
+11. [wildcard search](https://www.geeksforgeeks.org/wildcard-pattern-matching/)
+12. [wildcard to regex](https://www.codeproject.com/Articles/11556/Converting-Wildcards-to-Regexes)
+13. [suffix](https://www.geeksforgeeks.org/auto-complete-feature-using-trie/)
