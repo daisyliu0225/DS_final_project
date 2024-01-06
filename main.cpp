@@ -217,20 +217,34 @@ int main(int argc, char *argv[])
 	fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
-	vector<vector<int>> op;
+	vector<vector<char>> op_queries; //the operation of the queries
+	vector<char> ops; //the operation of one query
+
 	string q_tmp;
 	q_fi.open(query.c_str(), ios::in);
+	
 
 	while(getline(q_fi, q_tmp)){
 		int len = q_tmp.length();
 		for(int i=0;i<len;i++){
-			int num = q_tmp[i];
-			if(num == 34) op.push_back(34); //""
-			else if(num == 42) op.push_back(42); //*
-			else if(num == 43) op.push_back(43); //+
-			else if(num ==  47) op.push_back(47); // /
-			else if(num == 45) op.push_back(45); //-
+			if(q_tmp[i] == '\"'){
+				ops.push_back('\"');
+			}else if(q_tmp[i] == '+'){
+				ops.push_back('+');
+			}else if(q_tmp[i] == '-'){
+				ops.push_back('-');
+			}else if(q_tmp[i] == '*'){
+				ops.push_back('*');
+			}else if(q_tmp[i] == '/'){
+				ops.push_back('/');
+			}
 		}
+		if(ops.size() != 0) op_queries.push_back(ops);
+		else{
+			ops.push_back('.');
+			op_queries.push_back(ops);
+		}
+		ops.clear();
 		q_tmp_string = split(q_tmp, " ");
 		vector<string> content = word_parse(q_tmp_string);
 		queries.push_back(content);
@@ -238,22 +252,22 @@ int main(int argc, char *argv[])
 
 	q_fi.close();
 
-	for(int i=0;i<op.size();i++){
-		for(int j=0;j<op[i].size();j++){
-			cout<<queries[i][j]<<" ";
+	/*for(int i=0;i<op_queries.size();i++){
+		for(int j=0;j<op_queries[i].size();j++){
+			cout<<op_queries[i][j]<<" ";
 		}
 		cout<<endl;
-	}
+	}*/
 
 	// Search for different keys
 	fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
 		for(int j=0;j<queries[i].size();j++){
-			cout<<queries[i][j]<<" ";
+			//cout<<queries[i][j]<<" ";
 			search(root, queries[i][j].c_str(), title_table, outputfile);
 		}
-		cout<<endl;
+		//cout<<endl;
 	}
 
 	outputfile.close();
