@@ -21,6 +21,7 @@ The engine uses the structure of trie.
 |9|2024/01/05|release the memory of the trie tree at the end of the program|
 |10|2024/01/05|able to read from query file and find the words in the files|
 |11|2024/01/05|able to find the words in the file and output them into a file|
+|12|2024/01/06|pushing the query operator into a vector|
 
 ## Info to Self
 ### Command Lines
@@ -36,3 +37,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 6. [find algo](https://cplusplus.com/reference/algorithm/find/)
 7. [fstream as function parameter](https://stackoverflow.com/questions/14503605/using-fstream-object-as-a-function-parameter)
 8. [fstream](https://cplusplus.com/doc/tutorial/files/)
+9. [vector char and original char are different types](https://stackoverflow.com/questions/38513512/how-to-create-a-2-dimensional-matrix-of-char-using-vectors-in-c)
