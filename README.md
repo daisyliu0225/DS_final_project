@@ -42,3 +42,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 11. [wildcard search](https://www.geeksforgeeks.org/wildcard-pattern-matching/)
 12. [wildcard to regex](https://www.codeproject.com/Articles/11556/Converting-Wildcards-to-Regexes)
 13. [suffix](https://www.geeksforgeeks.org/auto-complete-feature-using-trie/)
+14. [trie dictionary wildcard](https://gist.github.com/shehabic/5a004258793d7cf8cfa0ca15ffebb6a1)
