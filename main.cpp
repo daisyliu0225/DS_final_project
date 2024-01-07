@@ -227,10 +227,12 @@ int main(int argc, char *argv[])
 	q_fi.open(query.c_str(), ios::in);
 
 	
-	bool paran = 0;
-	bool wild = 0;
-	bool star = 0;
+	
 	while(getline(q_fi, q_tmp)){
+		int popcount = 0;
+		bool paran = 0;
+		bool wild = 0;
+		bool star = 0;
 		int len = q_tmp.length();
 		//cout<<"len = "<<len<<endl;
 		for(int i=0;i<len;i++){
@@ -248,6 +250,7 @@ int main(int argc, char *argv[])
 					q_string.assign(ops.begin(), ops.end());
 					q_tmp_string.push_back(q_string);
 					ops.clear();
+					popcount++;
 				}
 			}else if(q_tmp[i] == '<'){
 				wild = 1;
@@ -262,6 +265,7 @@ int main(int argc, char *argv[])
 				q_string.assign(ops.begin(), ops.end());
 				q_tmp_string.push_back(q_string);
 				ops.clear();
+				popcount++;
 			}else if(q_tmp[i] == '*'){
 				if(wild == 1) c_stack.push_back(q_tmp[i]);
 				else{
@@ -278,6 +282,7 @@ int main(int argc, char *argv[])
 						q_string.assign(ops.begin(), ops.end());
 						q_tmp_string.push_back(q_string);
 						ops.clear();
+						popcount++;
 					}
 				}	
 			}else if(q_tmp[i] <= 'z' && q_tmp[i] >= 'a'){
@@ -293,6 +298,18 @@ int main(int argc, char *argv[])
 					q_string.assign(ops.begin(), ops.end());
 					q_tmp_string.push_back(q_string);
 					ops.clear();
+					popcount++;
+					if(popcount == 2){
+						if(!elements.empty()){
+							char c = elements.top();
+							ops.push_back(c);
+							elements.pop();
+							q_string.assign(ops.begin(), ops.end());
+							q_tmp_string.push_back(q_string);
+							ops.clear();
+							popcount = 0;
+						}
+					}
 				}
 			}else if(q_tmp[i] == '+' || q_tmp[i] == '-' || q_tmp[i] == '/'){
 				if(c_stack.size()!=0){
