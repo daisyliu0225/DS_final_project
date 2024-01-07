@@ -23,6 +23,7 @@ The engine uses the structure of trie.
 |11|2024/01/05|able to find the words in the file and output them into a file|
 |12|2024/01/06|pushing the query operator into a vector|
 |13|2024/01/07|making the queries into the postfix|
+|13-1|2024/01/07|postfix fixed|
 
 ## Info to Self
 ### Command Lines
