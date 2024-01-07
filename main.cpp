@@ -4,6 +4,7 @@
 #include<cstring>
 #include<vector>
 #include<algorithm>
+#include<stack>
 #include<set>
 #include<iostream>
 
@@ -217,54 +218,123 @@ int main(int argc, char *argv[])
 	fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
-	vector<vector<char>> op_queries; //the operation of the queries
-	vector<char> ops; //the operation of one query
+	vector<char> ops; //the operation of queries
+	vector<char> c_stack;
+	stack<char> elements;
 
 	string q_tmp;
+	string q_string;
 	q_fi.open(query.c_str(), ios::in);
-	
 
+	
+	bool paran = 0;
+	bool wild = 0;
+	bool star = 0;
 	while(getline(q_fi, q_tmp)){
 		int len = q_tmp.length();
+		//cout<<"len = "<<len<<endl;
 		for(int i=0;i<len;i++){
 			if(q_tmp[i] == '\"'){
-				ops.push_back('\"');
-			}else if(q_tmp[i] == '+'){
-				ops.push_back('+');
-			}else if(q_tmp[i] == '-'){
-				ops.push_back('-');
+				if(paran == 0) {
+					elements.push('\"');
+					paran = 1;
+				}else{
+					paran = 0;
+					elements.pop();
+					q_string.assign(c_stack.begin(), c_stack.end());
+					q_tmp_string.push_back(q_string);
+					c_stack.clear();
+					ops.push_back('\"');
+					q_string.assign(ops.begin(), ops.end());
+					q_tmp_string.push_back(q_string);
+					ops.clear();
+				}
 			}else if(q_tmp[i] == '<'){
-				ops.push_back('<');
+				wild = 1;
+				elements.push('<');
 			}else if(q_tmp[i] == '>'){
-				ops.push_back('>');
+				wild = 0;
+				elements.pop();
+				q_string.assign(c_stack.begin(), c_stack.end());
+				q_tmp_string.push_back(q_string);
+				c_stack.clear();
+				ops.push_back('<');
+				q_string.assign(ops.begin(), ops.end());
+				q_tmp_string.push_back(q_string);
+				ops.clear();
 			}else if(q_tmp[i] == '*'){
-				ops.push_back('*');
-			}else if(q_tmp[i] == '/'){
-				ops.push_back('/');
+				if(wild == 1) c_stack.push_back(q_tmp[i]);
+				else{
+					if(star == 0){
+						star = 1;
+						elements.push('*');
+					}else if(star == 1){
+						star = 0;
+						elements.pop();
+						q_string.assign(c_stack.begin(), c_stack.end());
+						q_tmp_string.push_back(q_string);
+						c_stack.clear();
+						ops.push_back('*');
+						q_string.assign(ops.begin(), ops.end());
+						q_tmp_string.push_back(q_string);
+						ops.clear();
+					}
+				}	
+			}else if(q_tmp[i] <= 'z' && q_tmp[i] >= 'a'){
+				c_stack.push_back(q_tmp[i]);
+			}else if(q_tmp[i] <= 'Z' && q_tmp[i] >='A'){
+				c_stack.push_back(q_tmp[i]);
+			}else if(q_tmp[i] == ' '){
+				if(c_stack.size()!=0){
+					q_string.assign(c_stack.begin(), c_stack.end());
+					q_tmp_string.push_back(q_string);
+					c_stack.clear();
+					ops.push_back('.');
+					q_string.assign(ops.begin(), ops.end());
+					q_tmp_string.push_back(q_string);
+					ops.clear();
+				}
+			}else if(q_tmp[i] == '+' || q_tmp[i] == '-' || q_tmp[i] == '/'){
+				if(c_stack.size()!=0){
+					q_string.assign(c_stack.begin(), c_stack.end());
+					q_tmp_string.push_back(q_string);
+					c_stack.clear();
+				}
+				elements.push(q_tmp[i]);
 			}
 		}
-		if(ops.size() != 0) op_queries.push_back(ops);
-		else{
+		if(c_stack.size()!=0){
+			q_string.assign(c_stack.begin(), c_stack.end());
+			q_tmp_string.push_back(q_string);
+			c_stack.clear();
 			ops.push_back('.');
-			op_queries.push_back(ops);
+			q_string.assign(ops.begin(), ops.end());
+			q_tmp_string.push_back(q_string);
+			ops.clear();
 		}
-		ops.clear();
-		q_tmp_string = split(q_tmp, " ");
-		vector<string> content = word_parse(q_tmp_string);
-		queries.push_back(content);
+		while(!elements.empty()){
+			char c = elements.top();
+			ops.push_back(c);
+			elements.pop();
+			q_string.assign(ops.begin(), ops.end());
+			q_tmp_string.push_back(q_string);
+			ops.clear();
+		}
+		queries.push_back(q_tmp_string);
+		q_tmp_string.clear();
 	}
 
 	q_fi.close();
 
-	/*for(int i=0;i<op_queries.size();i++){
-		for(int j=0;j<op_queries[i].size();j++){
-			cout<<op_queries[i][j]<<" ";
+	for(int i=0;i<queries.size();i++){
+		for(int j=0;j<queries[i].size();j++){
+			cout<<queries[i][j]<<" ";
 		}
 		cout<<endl;
-	}*/
+	}
 
 	// Search for different keys
-	fstream outputfile;
+	/*fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
 		for(int j=0;j<queries[i].size();j++){
@@ -274,7 +344,7 @@ int main(int argc, char *argv[])
 		//cout<<endl;
 	}
 
-	outputfile.close();
+	outputfile.close();*/
 
 	del(root);
 }
