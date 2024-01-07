@@ -233,6 +233,10 @@ int main(int argc, char *argv[])
 				ops.push_back('+');
 			}else if(q_tmp[i] == '-'){
 				ops.push_back('-');
+			}else if(q_tmp[i] == '<'){
+				ops.push_back('<');
+			}else if(q_tmp[i] == '>'){
+				ops.push_back('>');
 			}else if(q_tmp[i] == '*'){
 				ops.push_back('*');
 			}else if(q_tmp[i] == '/'){
