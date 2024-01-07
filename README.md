@@ -22,6 +22,7 @@ The engine uses the structure of trie.
 |10|2024/01/05|able to read from query file and find the words in the files|
 |11|2024/01/05|able to find the words in the file and output them into a file|
 |12|2024/01/06|pushing the query operator into a vector|
+|13|2024/01/07|making the queries into the postfix|
 
 ## Info to Self
 ### Command Lines
@@ -38,9 +39,12 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 7. [find algo](https://cplusplus.com/reference/algorithm/find/)
 8. [fstream as function parameter](https://stackoverflow.com/questions/14503605/using-fstream-object-as-a-function-parameter)
 9. [fstream](https://cplusplus.com/doc/tutorial/files/)
-10. [vector char and original char are different types](https://stackoverflow.com/questions/38513512/how-to-create-a-2-dimensional-matrix-of-char-using-vectors-in-c)
-11. [wildcard search](https://www.geeksforgeeks.org/wildcard-pattern-matching/)
-12. [wildcard to regex](https://www.codeproject.com/Articles/11556/Converting-Wildcards-to-Regexes)
-13. [suffix](https://www.geeksforgeeks.org/auto-complete-feature-using-trie/)
-14. [trie dictionary wildcard](https://gist.github.com/shehabic/5a004258793d7cf8cfa0ca15ffebb6a1)
-15. [trie for all suffixes](https://www.geeksforgeeks.org/pattern-searching-using-trie-suffixes/)
+10. [stack](https://cplusplus.com/reference/stack/stack/)
+11. [postorder](https://www.tinytsunami.info/preorder-inorder-postorder/)
+12. [vector char and original char are different types](https://stackoverflow.com/questions/38513512/how-to-create-a-2-dimensional-matrix-of-char-using-vectors-in-c)
+13. [wildcard search](https://www.geeksforgeeks.org/wildcard-pattern-matching/)
+14. [wildcard to regex](https://www.codeproject.com/Articles/11556/Converting-Wildcards-to-Regexes)
+15. [suffix](https://www.geeksforgeeks.org/auto-complete-feature-using-trie/)
+16. [trie dictionary wildcard](https://gist.github.com/shehabic/5a004258793d7cf8cfa0ca15ffebb6a1)
+17. [trie for all suffixes](https://www.geeksforgeeks.org/pattern-searching-using-trie-suffixes/)
+18. [copy vector to string](https://stackoverflow.com/questions/7382644/how-to-efficiently-copy-a-stdvectorchar-to-a-stdstring)
