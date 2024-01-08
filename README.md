@@ -25,6 +25,7 @@ The engine uses the structure of trie.
 |13|2024/01/07|making the queries into the postfix|
 |13-1|2024/01/07|postfix fixed|
 |13-3|2024/01/08|postfix another bug fixed|
+|14|2024/01/08|the search uses a vector to save the answer. Exact search is finished.|
 
 ## Info to Self
 ### Command Lines
@@ -50,3 +51,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 16. [trie dictionary wildcard](https://gist.github.com/shehabic/5a004258793d7cf8cfa0ca15ffebb6a1)
 17. [trie for all suffixes](https://www.geeksforgeeks.org/pattern-searching-using-trie-suffixes/)
 18. [copy vector to string](https://stackoverflow.com/questions/7382644/how-to-efficiently-copy-a-stdvectorchar-to-a-stdstring)
+19. [prefix and suffix](https://home.gamer.com.tw/artwork.php?sn=5157312)
