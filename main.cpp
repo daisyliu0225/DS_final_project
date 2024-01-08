@@ -381,23 +381,16 @@ int main(int argc, char *argv[])
 	fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
+		cout<<"i = "<<i<<endl;
 		for(int j=0;j<queries[i].size();j++){
-			cout<<queries[i][j]<<" ";
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
-				vector<int> op1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
-				opstack.push_back(op1);
-				for(int i=0;i<op1.size();i++){
-					cout<<op1[i]<<" ";
-				}
+				vector<int> v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				cout<<endl;
+				opstack.push_back(v1);
 				j++;
 			}else if(queries[i][j][0] >= 'A' && queries[i][j][0] <= 'Z'){
-				vector<int> op2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
-				opstack.push_back(op2);
-				for(int i=0;i<opstack[0].size();i++){
-					cout<<opstack[0][i]<<" ";
-				}
-				cout<<endl;
+				vector<int> v2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				opstack.push_back(v2);
 				j++;
 			}else if(queries[i][j][0] == '+'){
 				if(opstack.size() == 2){
@@ -444,18 +437,18 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		cout<<endl;
 		if(opstack[0].size() == 0) outputfile<<"Not found"<<endl;
 		else{
-			for(int i=0;i<opstack[0].size();i++){
-				for(int j=0;j<title_table.size();j++){
-					if(j == opstack[0][i]){
-						for(int k=0;k<title_table[j].size();k++) outputfile<<title_table[j][k]<<" ";
-						cout<<endl;
-						break;
-					}
+			for(int i=0;i<opstack.size();i++){
+				for(int j=0;j<opstack[i].size();j++){
+					int num = opstack[i][j];
+					for(int k=0;k<title_table[num].size();k++) outputfile<<title_table[num][k]<<" ";
+					outputfile<<endl;
 				}
 			}
+		}
+		for(int i=0;i<opstack.size();i++){
+			opstack.pop_back();
 		}
 	}
 
