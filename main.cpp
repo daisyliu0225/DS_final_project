@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
 							q_string.assign(ops.begin(), ops.end());
 							q_tmp_string.push_back(q_string);
 							ops.clear();
-							popcount = 0;
+							popcount = 1;
 						}
 					}
 				}
@@ -345,7 +345,7 @@ int main(int argc, char *argv[])
 						q_string.assign(ops.begin(), ops.end());
 						q_tmp_string.push_back(q_string);
 						ops.clear();
-						popcount = 0;
+						popcount = 1;
 					}
 				}
 			}else if(q_tmp[i] == '*'){
@@ -373,7 +373,7 @@ int main(int argc, char *argv[])
 								q_string.assign(ops.begin(), ops.end());
 								q_tmp_string.push_back(q_string);
 								ops.clear();
-								popcount = 0;
+								popcount = 1;
 							}
 						}
 					}
@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
 							q_string.assign(ops.begin(), ops.end());
 							q_tmp_string.push_back(q_string);
 							ops.clear();
-							popcount = 0;
+							popcount = 1;
 						}
 					}
 				}
@@ -436,6 +436,12 @@ int main(int argc, char *argv[])
 
 	q_fi.close();
 
+	for(int i=0;i<queries.size();i++){
+		for(int j=0;j<queries[i].size();j++){
+			cout<<queries[i][j]<<" ";
+		}
+		cout<<endl;
+	}
 	// Search for different keys
 	vector<vector<int>> opstack;
 	vector<int> answer;
@@ -444,7 +450,7 @@ int main(int argc, char *argv[])
 	for(int i=0;i<queries.size();i++){
 		//cout<<"i = "<<i<<endl;
 		for(int j=0;j<queries[i].size();j++){
-			cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
+			//cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
 				vector<int> v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				cout<<endl;

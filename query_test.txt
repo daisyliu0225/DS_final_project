@@ -1,1 +1,2 @@
 graph
+ante + poly - "conclusion" + "circumstances" / non
