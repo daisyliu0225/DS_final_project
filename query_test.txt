@@ -1,9 +1,3 @@
-reflect
-"graph" / *composition*
-"graph" + decompos
-graph + decomposition / reflection
 "spiderMan"
-<com*on> - "shaped"
-"graph" - "deep"
-"radiation" - "changed"
-"graph" + "decomposition" / "reflection"
+"graph"
+"radiation"

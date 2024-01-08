@@ -105,11 +105,9 @@ void insert(struct TrieNode *root, string key, int para)
 	if(it == pCrawl->UsedPara.end()) pCrawl->UsedPara.push_back(para);
 }
 
-// Returns true if key presents in trie, else
-// false
-bool search(struct TrieNode *root, string key, vector<vector<string>> title_table, fstream& outputfile)
-{
+std::vector<int> exact_search(struct TrieNode* root, string key){
 	struct TrieNode *pCrawl = root;
+	vector<int> answer;
 
 	for (int i = 0; i < key.length(); i++)
 	{
@@ -118,7 +116,7 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 		else if(key[i]<='z' && key[i]>='a') index = key[i] - 'a'; //a -> 26 , z->51
 
 		if (!pCrawl->children[index])
-			return false;
+			return answer;
 
 		pCrawl = pCrawl->children[index];
 	}
@@ -126,19 +124,20 @@ bool search(struct TrieNode *root, string key, vector<vector<string>> title_tabl
 	if(pCrawl->isEndOfWord == true){
 		int sz = pCrawl->UsedPara.size();
 		for(int i=0;i<sz;i++){
-			int seq = pCrawl->UsedPara[i];
-			for(int j=0;j<title_table.size();j++){
-				if(j == seq){
-					for(int k=0;k<title_table[seq].size();k++) outputfile<<title_table[j][k]<<" ";
-					outputfile<<endl;
-					break;
-				}
-			}
+			answer.push_back(pCrawl->UsedPara[i]);
 		}
-
+		return answer;
 	}
 
-	return (pCrawl->isEndOfWord);
+	return answer;
+}
+
+std::vector<int> operate(struct TrieNode *root, string keyword, string operate_ele){
+	std::vector<int> result;
+	if(operate_ele[0] == '\"'){
+		result = exact_search(root, keyword);
+	}
+	return result;
 }
 
 bool isEmpty(TrieNode* root)
@@ -376,25 +375,92 @@ int main(int argc, char *argv[])
 
 	q_fi.close();
 
-	for(int i=0;i<queries.size();i++){
-		for(int j=0;j<queries[i].size();j++){
-			cout<<queries[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-
 	// Search for different keys
-	/*fstream outputfile;
+	vector<vector<int>> opstack;
+	vector<int> answer;
+	fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
 		for(int j=0;j<queries[i].size();j++){
-			//cout<<queries[i][j]<<" ";
-			search(root, queries[i][j].c_str(), title_table, outputfile);
+			cout<<queries[i][j]<<" ";
+			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
+				vector<int> op1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				opstack.push_back(op1);
+				for(int i=0;i<op1.size();i++){
+					cout<<op1[i]<<" ";
+				}
+				cout<<endl;
+				j++;
+			}else if(queries[i][j][0] >= 'A' && queries[i][j][0] <= 'Z'){
+				vector<int> op2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				opstack.push_back(op2);
+				for(int i=0;i<opstack[0].size();i++){
+					cout<<opstack[0][i]<<" ";
+				}
+				cout<<endl;
+				j++;
+			}else if(queries[i][j][0] == '+'){
+				if(opstack.size() == 2){
+					for(int i=0;i<opstack[0].size();i++){
+						auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
+						if(it != opstack[1].end()) answer.push_back(opstack[0][i]);
+					}
+					sort(answer.begin(), answer.end());
+					opstack[0].clear();
+					opstack[1].clear();
+					for(int i=0;i<answer.size();i++){
+						opstack[0].push_back(answer[i]);
+					}
+					answer.clear();
+				}
+			}else if(queries[i][j][0] == '/'){
+				if(opstack.size() == 2){
+					for(int i=0;i<opstack[0].size();i++){
+						answer.push_back(opstack[0][i]);
+					}
+					for(int i=0;i<opstack[1].size();i++){
+						auto it = find(answer.begin(), answer.end(), opstack[1][i]);
+						if(it == answer.end()) answer.push_back(opstack[1][i]);
+					}
+					sort(answer.begin(), answer.begin());
+					opstack.clear();
+					for(int i=0;i<answer.size();i++){
+						opstack[0].push_back(answer[i]);
+					}
+					answer.clear();
+				}
+			}else if(queries[i][j][0] == '-'){
+				if(opstack.size() == 2){
+					for(int i=0;i<opstack[0].size();i++){
+						auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
+						if(it == opstack[1].end()) answer.push_back(opstack[0][i]);
+					}
+					sort(answer.begin(), answer.end());
+					opstack.clear();
+					for(int i=0;i<answer.size();i++){
+						opstack[0].push_back(answer[i]);
+					}
+					answer.clear();
+				}
+			}
 		}
-		//cout<<endl;
+		cout<<endl;
+		if(opstack[0].size() == 0) outputfile<<"Not found"<<endl;
+		else{
+			for(int i=0;i<opstack[0].size();i++){
+				for(int j=0;j<title_table.size();j++){
+					if(j == opstack[0][i]){
+						for(int k=0;k<title_table[j].size();k++) outputfile<<title_table[j][k]<<" ";
+						cout<<endl;
+						break;
+					}
+				}
+			}
+		}
 	}
 
-	outputfile.close();*/
+
+	outputfile.close();
 
 	del(root);
 }
