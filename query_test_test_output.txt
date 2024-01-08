@@ -1,5 +1,2 @@
-Not found
 Sparsitycertifying Graph Decompositions 
 Partial cubes structures characterizations and constructions 
-Calculation of prompt diphoton production cross sections at Tevatron and 
-Some new experimental photonic flame effect features 

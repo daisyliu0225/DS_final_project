@@ -132,11 +132,72 @@ std::vector<int> exact_search(struct TrieNode* root, string key){
 	return answer;
 }
 
+// Returns 0 if current node has a child
+// If all children are NULL, return 1.
+bool isLastNode(struct TrieNode* root)
+{
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+        if (root->children[i])
+            return 0;
+    return 1;
+}
+
+std::vector<int> suggestionString(struct TrieNode*root, string curPrefix, vector<int> curvec){
+	if(root->isEndOfWord == true){
+		for(int i=0;i<root->UsedPara.size();i++){
+			auto it = find(curvec.begin(), curvec.end(), root->UsedPara[i]);
+			if(it == curvec.end()) curvec.push_back(root->UsedPara[i]);
+		}
+	}
+
+	for(int i=0;i<ALPHABET_SIZE;i++){
+		if(root->children[i]){
+			char child = 'a' + i;
+			suggestionString(root->children[i], curPrefix+ child, curvec);
+		}
+	}
+	return curvec;
+}
+
+std::vector<int> prefix_search(struct TrieNode* root, string key){
+	struct TrieNode *pCrawl = root;
+	vector<int> answer;
+
+	for (int i = 0; i < key.length(); i++)
+	{
+		int index;
+		if(key[i]<='Z' && key[i]>='A') index = key[i] - 'A'; //A->0 ... Z->25
+		else if(key[i]<='z' && key[i]>='a') index = key[i] - 'a'; //a -> 26 , z->51
+
+		if (!pCrawl->children[index])
+			return answer;
+
+		pCrawl = pCrawl->children[index];
+	}
+
+	if(isLastNode(pCrawl)){
+		for(int i=0;i<pCrawl->UsedPara.size();i++) answer.push_back(pCrawl->UsedPara[i]);
+	}
+
+	vector<int> v = suggestionString(pCrawl, key, answer);
+	return v;
+}
+
+
+//operate function
 std::vector<int> operate(struct TrieNode *root, string keyword, string operate_ele){
 	std::vector<int> result;
 	if(operate_ele[0] == '\"'){
 		result = exact_search(root, keyword);
+	}else if(operate_ele[0] == '*'){
+		//result = suffix_search(root, keyword);
+	}else if(operate_ele[0] == '.'){
+		result = prefix_search(root, keyword);
+	}else if(operate_ele[0] == '<'){
+
 	}
+	for(int i=0;i<result.size();i++) cout<<result[i]<<" ";
+	cout<<endl;
 	return result;
 }
 
@@ -381,8 +442,9 @@ int main(int argc, char *argv[])
 	fstream outputfile;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
-		cout<<"i = "<<i<<endl;
+		//cout<<"i = "<<i<<endl;
 		for(int j=0;j<queries[i].size();j++){
+			cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
 				vector<int> v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				cout<<endl;
