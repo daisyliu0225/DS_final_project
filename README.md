@@ -26,6 +26,7 @@ The engine uses the structure of trie.
 |13-1|2024/01/07|postfix fixed|
 |13-3|2024/01/08|postfix another bug fixed|
 |14|2024/01/08|the search uses a vector to save the answer. Exact search is finished.|
+|15|2024/01/08|Prefix search finished.|
 
 ## Info to Self
 ### Command Lines
