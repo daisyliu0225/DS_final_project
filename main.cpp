@@ -153,7 +153,7 @@ std::vector<int> suggestionString(struct TrieNode*root, string curPrefix, vector
 	for(int i=0;i<ALPHABET_SIZE;i++){
 		if(root->children[i]){
 			char child = 'a' + i;
-			suggestionString(root->children[i], curPrefix+ child, curvec);
+			curvec = suggestionString(root->children[i], curPrefix+ child, curvec);
 		}
 	}
 	return curvec;
@@ -196,7 +196,13 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 	}else if(operate_ele[0] == '<'){
 
 	}
-	for(int i=0;i<result.size();i++) cout<<result[i]<<" ";
+	for(int i=0;i<keyword.length();i++){
+		cout<<keyword[i];
+	}
+	cout<<endl;
+	for(int i=0;i<result.size();i++){
+		cout<<"result = "<<result[i]<<" ";
+	}
 	cout<<endl;
 	return result;
 }
@@ -446,6 +452,7 @@ int main(int argc, char *argv[])
 	vector<vector<int>> opstack;
 	vector<int> answer;
 	fstream outputfile;
+	int count = 0;
 	outputfile.open(output.c_str(), ios::out);
 	for(int i=0;i<queries.size();i++){
 		//cout<<"i = "<<i<<endl;
@@ -453,70 +460,78 @@ int main(int argc, char *argv[])
 			//cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
 				vector<int> v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
-				cout<<endl;
 				opstack.push_back(v1);
 				j++;
+				count++;
 			}else if(queries[i][j][0] >= 'A' && queries[i][j][0] <= 'Z'){
 				vector<int> v2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v2);
 				j++;
+				count++;
 			}else if(queries[i][j][0] == '+'){
-				if(opstack.size() == 2){
-					for(int i=0;i<opstack[0].size();i++){
-						auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
-						if(it != opstack[1].end()) answer.push_back(opstack[0][i]);
-					}
-					sort(answer.begin(), answer.end());
-					opstack[0].clear();
-					opstack[1].clear();
-					for(int i=0;i<answer.size();i++){
-						opstack[0].push_back(answer[i]);
-					}
-					answer.clear();
+				for(int i=0;i<opstack.size();i++){
+					cout<<opstack[i].size()<<" ";
+					for(int j=0;j<opstack[i].size();j++) cout<<"ans = "<<opstack[i][j]<<" ";
+					cout<<endl;
+				}
+				for(int i=0;i<opstack[0].size();i++){
+					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
+					if(it != opstack[1].end()) answer.push_back(opstack[0][i]);
+				}
+				sort(answer.begin(), answer.end());
+				for(int i=0;i<answer.size();i++) cout<<answer[i]<<endl;
+				while(!opstack.empty()) opstack.pop_back();
+				opstack.push_back(answer);
+				cout<<"size = "<<opstack.size()<<endl;
+				for(int i=0;i<opstack.size();i++){
+					cout<<"size2 = "<<opstack[i].size()<<endl;
+					for(int j=0;j<opstack[i].size();j++) cout<<opstack[i][j]<<" ";
+					cout<<endl;
 				}
 			}else if(queries[i][j][0] == '/'){
-				if(opstack.size() == 2){
-					for(int i=0;i<opstack[0].size();i++){
-						answer.push_back(opstack[0][i]);
-					}
-					for(int i=0;i<opstack[1].size();i++){
-						auto it = find(answer.begin(), answer.end(), opstack[1][i]);
-						if(it == answer.end()) answer.push_back(opstack[1][i]);
-					}
-					sort(answer.begin(), answer.begin());
-					opstack.clear();
-					for(int i=0;i<answer.size();i++){
-						opstack[0].push_back(answer[i]);
-					}
-					answer.clear();
+				for(int i=0;i<opstack[0].size();i++){
+					answer.push_back(opstack[0][i]);
 				}
+				for(int i=0;i<opstack[1].size();i++){
+					auto it = find(answer.begin(), answer.end(), opstack[1][i]);
+					if(it == answer.end()) answer.push_back(opstack[1][i]);
+				}
+				sort(answer.begin(), answer.begin());
+				while(!opstack.empty()) opstack.pop_back();
+				opstack.push_back(answer);
+				answer.clear();
 			}else if(queries[i][j][0] == '-'){
-				if(opstack.size() == 2){
-					for(int i=0;i<opstack[0].size();i++){
-						auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
-						if(it == opstack[1].end()) answer.push_back(opstack[0][i]);
-					}
-					sort(answer.begin(), answer.end());
-					opstack.clear();
-					for(int i=0;i<answer.size();i++){
-						opstack[0].push_back(answer[i]);
-					}
-					answer.clear();
+				cout<<"- ans"<<endl;
+				for(int i=0;i<opstack[0].size();i++){
+					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
+					if(it == opstack[1].end()) answer.push_back(opstack[0][i]);
 				}
+				for(int i=0;i<answer.size();i++) cout<<answer[i]<<" ";
+				cout<<endl;
+				sort(answer.begin(), answer.end());
+				while(!opstack.empty()) opstack.pop_back();
+				opstack.push_back(answer);
+				for(int i=0;i<opstack[0].size();i++){
+					cout<<opstack[0][i]<<" ";
+				}
+				cout<<endl;
+				answer.clear();
 			}
+			cout<<"round"<<endl;
 		}
+		sort(opstack[0].begin(), opstack[0].end());
+		for(int i=0;i<opstack[0].size();i++) cout<<opstack[0][i]<<" ";
+		cout<<endl;
 		if(opstack[0].size() == 0) outputfile<<"Not found"<<endl;
 		else{
-			for(int i=0;i<opstack.size();i++){
-				for(int j=0;j<opstack[i].size();j++){
-					int num = opstack[i][j];
-					for(int k=0;k<title_table[num].size();k++) outputfile<<title_table[num][k]<<" ";
-					outputfile<<endl;
-				}
+			for(int j=0;j<opstack[0].size();j++){
+				int num = opstack[0][j];
+				for(int k=0;k<title_table[num].size();k++) outputfile<<title_table[num][k]<<" ";
+				outputfile<<endl;
 			}
 		}
 		for(int i=0;i<opstack.size();i++){
-			opstack.pop_back();
+			opstack[i].pop_back();
 		}
 	}
 
