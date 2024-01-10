@@ -252,7 +252,9 @@ int main(int argc, char *argv[])
 	dr = opendir(dir.c_str()); //open data directory
 
 	struct TrieNode *root = getNode();
+	struct TrieNode *rev_root  = getNode();
 	vector<string> content;
+	vector<string> rev_content;
 	int counter = 0;
   	while ((dirp = readdir(dr)))
     {
@@ -266,14 +268,18 @@ int main(int argc, char *argv[])
 
 		while(getline(fi, tmp)){
 			tmp_string = split(tmp, " ");
-
 			// PARSE CONTENT
 			content = word_parse(tmp_string);
 
 			for(auto &word : content){
 				//cout<<word<<endl;
 				insert(root, word, counter);
+				vector<char> rev_word(word.begin(), word.end());
+				reverse(rev_word.begin(), rev_word.end());
+				string rev_str(rev_word.begin(), rev_word.end());
+				insert(rev_root, rev_str, counter);
 			}
+
 		}
     	fi.close();
 		counter++;
