@@ -55,3 +55,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 18. [trie for all suffixes](https://www.geeksforgeeks.org/pattern-searching-using-trie-suffixes/)
 19. [copy vector to string](https://stackoverflow.com/questions/7382644/how-to-efficiently-copy-a-stdvectorchar-to-a-stdstring)
 20. [prefix and suffix](https://home.gamer.com.tw/artwork.php?sn=5157312)
+21. [strings with given suffix](https://www.geeksforgeeks.org/find-strings-that-end-with-a-given-suffix/)
