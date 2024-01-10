@@ -29,6 +29,7 @@ The engine uses the structure of trie.
 |15|2024/01/08|Prefix search finished.|
 |16|2024/01/09|and or exclude finished|
 |17-1|2024/01/10|reverse the word->suffix search starting|
+|17-2|2024/01/10|suffix search finished|
 
 ## Info to Self
 ### Command Lines
