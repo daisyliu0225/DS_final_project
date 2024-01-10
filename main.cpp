@@ -190,7 +190,10 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 	if(operate_ele[0] == '\"'){
 		result = exact_search(root, keyword);
 	}else if(operate_ele[0] == '*'){
-		//result = suffix_search(root, keyword);
+		vector<char> rev_word(keyword.begin(), keyword.end());
+		reverse(rev_word.begin(), rev_word.end());
+		string rev_str(rev_word.begin(), rev_word.end());
+		result = prefix_search(root, rev_str); //it uses prefix search but the keyword is reversed
 	}else if(operate_ele[0] == '.'){
 		result = prefix_search(root, keyword);
 	}else if(operate_ele[0] == '<'){
@@ -457,6 +460,7 @@ int main(int argc, char *argv[])
 	// Search for different keys
 	vector<vector<int>> opstack;
 	vector<int> answer;
+	vector<int> v1, v2;
 	fstream outputfile;
 	int count = 0;
 	outputfile.open(output.c_str(), ios::out);
@@ -465,12 +469,14 @@ int main(int argc, char *argv[])
 		for(int j=0;j<queries[i].size();j++){
 			//cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
-				vector<int> v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				if(queries[i][j+1][0] == '*') v1 = operate(rev_root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				else v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v1);
 				j++;
 				count++;
 			}else if(queries[i][j][0] >= 'A' && queries[i][j][0] <= 'Z'){
-				vector<int> v2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				if(queries[i][j+1][0] == '*') v2 = operate(rev_root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				else v2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v2);
 				j++;
 				count++;
@@ -536,9 +542,7 @@ int main(int argc, char *argv[])
 				outputfile<<endl;
 			}
 		}
-		for(int i=0;i<opstack.size();i++){
-			opstack[i].pop_back();
-		}
+		while(!opstack.empty()) opstack.pop_back();
 	}
 
 
