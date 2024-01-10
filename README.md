@@ -28,6 +28,7 @@ The engine uses the structure of trie.
 |14|2024/01/08|the search uses a vector to save the answer. Exact search is finished.|
 |15|2024/01/08|Prefix search finished.|
 |16|2024/01/09|and or exclude finished|
+|17-1|2024/01/10|reverse the word->suffix search starting|
 
 ## Info to Self
 ### Command Lines
