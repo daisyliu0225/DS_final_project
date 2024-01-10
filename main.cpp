@@ -267,6 +267,13 @@ int main(int argc, char *argv[])
     	getline(fi, title_name);
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
+		for(auto &title_word : title){
+			insert(root, title_word, counter);
+			vector<char> rev_word_title(word.begin(), word.end());
+			reverse(rev_word_title.begin(), rev_word_title.end());
+			string rev_title_str(rev_word_title.begin(), rev_word_title.end());
+			insert(rev_root, rev_title_str, counter);
+		}
 		title_table.push_back(title);
 
 		while(getline(fi, tmp)){
