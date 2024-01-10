@@ -29,6 +29,7 @@ The engine uses the structure of trie.
 |15|2024/01/08|Prefix search finished.|
 |16|2024/01/09|and or exclude finished|
 |17-1|2024/01/10|reverse the word->suffix search starting|
+|17-2|2024/01/10|suffix search finished|
 
 ## Info to Self
 ### Command Lines
@@ -57,3 +58,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 19. [copy vector to string](https://stackoverflow.com/questions/7382644/how-to-efficiently-copy-a-stdvectorchar-to-a-stdstring)
 20. [prefix and suffix](https://home.gamer.com.tw/artwork.php?sn=5157312)
 21. [strings with given suffix](https://www.geeksforgeeks.org/find-strings-that-end-with-a-given-suffix/)
+22. [algo reverse](https://cplusplus.com/reference/algorithm/reverse/)
