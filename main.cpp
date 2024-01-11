@@ -197,7 +197,26 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 	}else if(operate_ele[0] == '.'){
 		result = prefix_search(root, keyword);
 	}else if(operate_ele[0] == '<'){
+		vector<char> prefix;
+		vector<char> suffix;
+		bool prefin = 0;
+		bool suffin = 0;
+		int wild_len = keyword.length();
+		for(int i=0;i<wild_len;i++){
+			if(keyword[i] == '*') prefin = 1;
+			else if(prefin != 1)prefix.push_back(keyword[i]);
 
+			if(keyword[wild_len-i] == '*') suffin = 1;
+			else if(suffin != 1) suffix.push_back(keyword[wild_len-i]);
+			
+
+		}
+		for(int i=0;i<prefix.size();i++) cout<<prefix[i];
+		cout<<endl;
+
+		cout<<"suffix"<<endl;
+		for(int i=0;i<suffix.size();i++) cout<<suffix[i];
+		cout<<endl;
 	}
 	for(int i=0;i<keyword.length();i++){
 		cout<<keyword[i];
@@ -264,12 +283,13 @@ int main(int argc, char *argv[])
     	filepath = dir + "/" + dirp->d_name;
     	// Endeavor to read a single number from the file and display it
     	fi.open(filepath.c_str());
+		cout<<filepath.c_str()<<endl;
     	getline(fi, title_name);
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
 		for(auto &title_word : title){
 			insert(root, title_word, counter);
-			vector<char> rev_word_title(word.begin(), word.end());
+			vector<char> rev_word_title(title_word.begin(), title_word.end());
 			reverse(rev_word_title.begin(), rev_word_title.end());
 			string rev_title_str(rev_word_title.begin(), rev_word_title.end());
 			insert(rev_root, rev_title_str, counter);
