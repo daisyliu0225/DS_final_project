@@ -211,12 +211,6 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 			
 
 		}
-		for(int i=0;i<prefix.size();i++) cout<<prefix[i];
-		cout<<endl;
-
-		cout<<"suffix"<<endl;
-		for(int i=0;i<suffix.size();i++) cout<<suffix[i];
-		cout<<endl;
 	}
 	for(int i=0;i<keyword.length();i++){
 		cout<<keyword[i];
