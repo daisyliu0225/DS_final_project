@@ -30,6 +30,7 @@ The engine uses the structure of trie.
 |16|2024/01/09|and or exclude finished|
 |17-1|2024/01/10|reverse the word->suffix search starting|
 |17-2|2024/01/10|suffix search finished|
+|18-1|2024/01/11|prefix & suffix array finished|
 
 ## Cores
 ### Suffix
