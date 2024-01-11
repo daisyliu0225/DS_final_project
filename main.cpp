@@ -196,22 +196,8 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 		result = prefix_search(root, rev_str); //it uses prefix search but the keyword is reversed
 	}else if(operate_ele[0] == '.'){
 		result = prefix_search(root, keyword);
-	}else if(operate_ele[0] == '<'){
-		vector<char> prefix;
-		vector<char> suffix;
-		bool prefin = 0;
-		bool suffin = 0;
-		int wild_len = keyword.length();
-		for(int i=0;i<wild_len;i++){
-			if(keyword[i] == '*') prefin = 1;
-			else if(prefin != 1)prefix.push_back(keyword[i]);
-
-			if(keyword[wild_len-i] == '*') suffin = 1;
-			else if(suffin != 1) suffix.push_back(keyword[wild_len-i]);
-			
-
-		}
 	}
+
 	for(int i=0;i<keyword.length();i++){
 		cout<<keyword[i];
 	}
@@ -222,6 +208,7 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 	cout<<endl;
 	return result;
 }
+
 
 bool isEmpty(TrieNode* root)
 {
