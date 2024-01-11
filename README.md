@@ -37,10 +37,12 @@ The engine uses the structure of trie.
 Creates a backward trie. Searches through the backward trie.
 
 ### Wildcard
-Makes a forward trie and backward trie. <br />
+~~Makes a forward trie and backward trie. <br />
 The word before the wildcard symbol uses the prefix search. <br />
 The word after the wildcard symbol uses the suffix search. <br />
-After getting the two results, "and" the two results together. <br />
+After getting the two results, "and" the two results together. <br />~~
+It fails when there is a word staring with com and another ends with on.
+
 
 ## Info to Self
 ### Command Lines
