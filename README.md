@@ -30,6 +30,19 @@ The engine uses the structure of trie.
 |16|2024/01/09|and or exclude finished|
 |17-1|2024/01/10|reverse the word->suffix search starting|
 |17-2|2024/01/10|suffix search finished|
+|18-1|2024/01/11|prefix & suffix array finished|
+
+## Cores
+### Suffix
+Creates a backward trie. Searches through the backward trie.
+
+### Wildcard
+~~Makes a forward trie and backward trie. <br />
+The word before the wildcard symbol uses the prefix search. <br />
+The word after the wildcard symbol uses the suffix search. <br />
+After getting the two results, "and" the two results together. <br />~~
+It fails when there is a word staring with com and another ends with on.
+
 
 ## Info to Self
 ### Command Lines
