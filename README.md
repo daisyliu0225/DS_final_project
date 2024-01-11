@@ -31,6 +31,16 @@ The engine uses the structure of trie.
 |17-1|2024/01/10|reverse the word->suffix search starting|
 |17-2|2024/01/10|suffix search finished|
 
+## Cores
+### Suffix
+Creates a backward trie. Searches through the backward trie.
+
+### Wildcard
+Makes a forward trie and backward trie. <br />
+The word before the wildcard symbol uses the prefix search. <br />
+The word after the wildcard symbol uses the suffix search. <br />
+After getting the two results, "and" the two results together. <br />
+
 ## Info to Self
 ### Command Lines
 compile -- g++ -O2 -std=c++17 -o essay_search main.cpp <br />
