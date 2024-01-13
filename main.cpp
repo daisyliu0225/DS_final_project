@@ -577,6 +577,7 @@ int main(int argc, char *argv[])
 	outputfile.close();
 
 	del(root);
+	del(rev_root);
 }
 
 
