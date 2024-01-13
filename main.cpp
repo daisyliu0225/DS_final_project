@@ -508,10 +508,11 @@ int main(int argc, char *argv[])
 				}
 				for(int i=0;i<opstack[0].size();i++){
 					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
-					if(it != opstack[1].end()) answer.push_back(opstack[0][i]);
+					if(it == opstack[1].end()) continue;
+					else answer.push_back(opstack[0][i]);
 				}
 				sort(answer.begin(), answer.end());
-				for(int i=0;i<answer.size();i++) cout<<answer[i]<<endl;
+				//for(int i=0;i<answer.size();i++) cout<<answer[i]<<endl;
 				while(!opstack.empty()) opstack.pop_back();
 				opstack.push_back(answer);
 				cout<<"size = "<<opstack.size()<<endl;
@@ -520,6 +521,7 @@ int main(int argc, char *argv[])
 					for(int j=0;j<opstack[i].size();j++) cout<<opstack[i][j]<<" ";
 					cout<<endl;
 				}
+				answer.clear();
 			}else if(queries[i][j][0] == '/'){
 				for(int i=0;i<opstack[0].size();i++){
 					answer.push_back(opstack[0][i]);
@@ -555,7 +557,7 @@ int main(int argc, char *argv[])
 		cout<<"opstack"<<endl;
 		for(int i=0;i<opstack[0].size();i++) cout<<opstack[0][i]<<" ";
 		cout<<endl;
-		if(opstack[0].size() == 0) outputfile<<"Not found"<<endl;
+		if(opstack[0].size() == 0) outputfile<<"Not Found!"<<endl;
 		else{
 			for(int i=0;i<opstack[0].size();i++){
 				int num = opstack[0][i];
@@ -566,7 +568,7 @@ int main(int argc, char *argv[])
 						num2 = j;
 						break;
 					}
-					if(title_table[sz-j].second == num){
+					else if(title_table[sz-j].second == num){
 						num2 = sz-j;
 						break;
 					}
