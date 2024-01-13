@@ -7,6 +7,7 @@
 #include<stack>
 #include<set>
 #include<iostream>
+#include<utility>
 
 #include <dirent.h> //it is fine, ignore
 #include <unistd.h>
@@ -248,7 +249,8 @@ int main(int argc, char *argv[])
 	string dir, filepath;
 	vector<string> tmp_string;
 	vector<string> title;
-	vector<vector<string>> title_table;
+	vector<pair<string, int>> title_table;
+
 	struct dirent *dirp;
 	DIR *dr;
 	dir = data_dir;
@@ -264,20 +266,20 @@ int main(int argc, char *argv[])
     	filepath = dir + "/" + dirp->d_name;
     	// Endeavor to read a single number from the file and display it
     	fi.open(filepath.c_str());
-		string dn = (dirp->d_name.begin(), dirp->d_name.end());
-		//cout<<dirp->d_name<<endl;
-		int len_dn = dn.length();
-		for(int i=0;i<len_dn;i++){
+		string dn = dirp->d_name;
+		cout<<"dn "<<dn<<endl;
+		for(int i=0;i<dn.length();i++){
 			if(dn[i] == '.') break;
-			else file_title.push_back(dn[i]);
+			else file_title.push_back(dn[i]- '0');
 		}
 		int counter = 0;
-		for (auto d : file_title)  
-		{
-    		counter = counter * 10 + d;
+		for(auto d : file_title){
+			counter = counter *10 + d;
 		}
-		cout<<"counter = "<<counter<<endl;
+		//cout<<"counter "<<counter<<endl;
+		file_title.clear();
     	getline(fi, title_name);
+		title_table.push_back(make_pair(title_name, counter));
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
 		for(auto &title_word : title){
@@ -287,7 +289,6 @@ int main(int argc, char *argv[])
 			string rev_title_str(rev_word_title.begin(), rev_word_title.end());
 			insert(rev_root, rev_title_str, counter);
 		}
-		title_table.push_back(title);
 
 		while(getline(fi, tmp)){
 			tmp_string = split(tmp, " ");
@@ -305,7 +306,6 @@ int main(int argc, char *argv[])
 
 		}
     	fi.close();
-		counter++;
     }
   	closedir(dr);
 
@@ -552,13 +552,21 @@ int main(int argc, char *argv[])
 			cout<<"round"<<endl;
 		}
 		sort(opstack[0].begin(), opstack[0].end());
+		cout<<"opstack"<<endl;
 		for(int i=0;i<opstack[0].size();i++) cout<<opstack[0][i]<<" ";
 		cout<<endl;
 		if(opstack[0].size() == 0) outputfile<<"Not found"<<endl;
 		else{
-			for(int j=0;j<opstack[0].size();j++){
-				int num = opstack[0][j];
-				for(int k=0;k<title_table[num].size();k++) outputfile<<title_table[num][k]<<" ";
+			for(int i=0;i<opstack[0].size();i++){
+				int num = opstack[0][i];
+				int num2 = 0;
+				for(int j=0;j<title_table.size();j++){
+					if(title_table[j].second == num){
+						num2 = j;
+						break;
+					}
+				}
+				for(int j=0;j<title_table[num2].first.size();j++) outputfile<<title_table[num2].first[j];
 				outputfile<<endl;
 			}
 		}
