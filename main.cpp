@@ -560,9 +560,14 @@ int main(int argc, char *argv[])
 			for(int i=0;i<opstack[0].size();i++){
 				int num = opstack[0][i];
 				int num2 = 0;
-				for(int j=0;j<title_table.size();j++){
+				int sz = title_table.size();
+				for(int j=0;j<sz;j++){
 					if(title_table[j].second == num){
 						num2 = j;
+						break;
+					}
+					if(title_table[sz-j].second == num){
+						num2 = sz-j;
 						break;
 					}
 				}
