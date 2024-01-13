@@ -258,13 +258,25 @@ int main(int argc, char *argv[])
 	struct TrieNode *rev_root  = getNode();
 	vector<string> content;
 	vector<string> rev_content;
-	int counter = 0;
+	vector<int> file_title;
   	while ((dirp = readdir(dr)))
     {
     	filepath = dir + "/" + dirp->d_name;
     	// Endeavor to read a single number from the file and display it
     	fi.open(filepath.c_str());
-		cout<<filepath.c_str()<<endl;
+		string dn = (dirp->d_name.begin(), dirp->d_name.end());
+		//cout<<dirp->d_name<<endl;
+		int len_dn = dn.length();
+		for(int i=0;i<len_dn;i++){
+			if(dn[i] == '.') break;
+			else file_title.push_back(dn[i]);
+		}
+		int counter = 0;
+		for (auto d : file_title)  
+		{
+    		counter = counter * 10 + d;
+		}
+		cout<<"counter = "<<counter<<endl;
     	getline(fi, title_name);
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
