@@ -74,3 +74,4 @@ execute -- ./essay_search ./data_folder ./query_path ./output_path
 20. [prefix and suffix](https://home.gamer.com.tw/artwork.php?sn=5157312)
 21. [strings with given suffix](https://www.geeksforgeeks.org/find-strings-that-end-with-a-given-suffix/)
 22. [algo reverse](https://cplusplus.com/reference/algorithm/reverse/)
+23. [regex](https://www.geeksforgeeks.org/implementing-regular-expression-matching/)
