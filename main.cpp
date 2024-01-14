@@ -348,11 +348,6 @@ int main(int argc, char *argv[])
 			insert(rev_root, rev_title_str, counter);
 		}
 
-		for(int i=0;i<title_table.size();i++){
-			cout<<"title_name"<<title_table[i].first<<endl;
-			cout<<"counter"<<title_table[i].second<<endl;
-		}
-
 		while(getline(fi, tmp)){
 			tmp_string = split(tmp, " ");
 			// PARSE CONTENT
@@ -377,7 +372,6 @@ int main(int argc, char *argv[])
     }
   	closedir(dr);
 
-	
 	fstream q_fi;
 	vector<string> q_tmp_string;
 	vector<vector<string>> queries;
@@ -539,12 +533,6 @@ int main(int argc, char *argv[])
 
 	q_fi.close();
 
-	for(int i=0;i<queries.size();i++){
-		for(int j=0;j<queries[i].size();j++){
-			cout<<queries[i][j]<<" ";
-		}
-		cout<<endl;
-	}
 	// Search for different keys
 	vector<vector<int>> opstack;
 	vector<int> answer;
@@ -570,11 +558,6 @@ int main(int argc, char *argv[])
 				j++;
 				count++;
 			}else if(queries[i][j][0] == '+'){
-				for(int i=0;i<opstack.size();i++){
-					cout<<opstack[i].size()<<" ";
-					for(int j=0;j<opstack[i].size();j++) cout<<"ans = "<<opstack[i][j]<<" ";
-					cout<<endl;
-				}
 				for(int i=0;i<opstack[0].size();i++){
 					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
 					if(it == opstack[1].end()) continue;
@@ -584,12 +567,6 @@ int main(int argc, char *argv[])
 				//for(int i=0;i<answer.size();i++) cout<<answer[i]<<endl;
 				while(!opstack.empty()) opstack.pop_back();
 				opstack.push_back(answer);
-				cout<<"size = "<<opstack.size()<<endl;
-				for(int i=0;i<opstack.size();i++){
-					cout<<"size2 = "<<opstack[i].size()<<endl;
-					for(int j=0;j<opstack[i].size();j++) cout<<opstack[i][j]<<" ";
-					cout<<endl;
-				}
 				answer.clear();
 			}else if(queries[i][j][0] == '/'){
 				for(int i=0;i<opstack[0].size();i++){
@@ -604,28 +581,17 @@ int main(int argc, char *argv[])
 				opstack.push_back(answer);
 				answer.clear();
 			}else if(queries[i][j][0] == '-'){
-				cout<<"- ans"<<endl;
 				for(int i=0;i<opstack[0].size();i++){
 					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
 					if(it == opstack[1].end()) answer.push_back(opstack[0][i]);
 				}
-				for(int i=0;i<answer.size();i++) cout<<answer[i]<<" ";
-				cout<<endl;
 				sort(answer.begin(), answer.end());
 				while(!opstack.empty()) opstack.pop_back();
 				opstack.push_back(answer);
-				for(int i=0;i<opstack[0].size();i++){
-					cout<<opstack[0][i]<<" ";
-				}
-				cout<<endl;
 				answer.clear();
 			}
-			cout<<"round"<<endl;
 		}
 		sort(opstack[0].begin(), opstack[0].end());
-		cout<<"opstack"<<endl;
-		for(int i=0;i<opstack[0].size();i++) cout<<opstack[0][i]<<" ";
-		cout<<endl;
 		if(opstack[0].size() == 0) outputfile<<"Not Found!"<<endl;
 		else{
 			for(int i=0;i<opstack[0].size();i++){
