@@ -141,24 +141,3 @@ il
 <*ce*v>
 fore
 "sought" / "conclusion"
-para + *pro*
-*micro*
-*fore* + *post*
-im
-<dif*tion>
-"constraints"
-*mid*
-non
-ir
-*de*
-*em* / "semiconductor" / pro
-"normal"
-semi
-"achieve"
-anti
-"ensure"
-<ap*le>
-"participation" + para
-un / "items"
-"purchase"
-*extra* + *semi*

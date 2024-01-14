@@ -275,20 +275,34 @@ std::vector<int> prefix_wild(struct TrieNode* root, string key, string prekey){
 	return v;
 }
 
-std::vector<int> wildcard(struct TrieNode *root, string keyword){
+std::vector<int> wildcard(struct TrieNode *root, struct TrieNode *rev_root, string keyword){
 	std::vector<int> result;
 	std::vector<char> prekey;
-	bool prefin = 0;
+	bool prefin = 0, postfin = 0;
 	int len = keyword.length();
-	for(int i=0;i<len;i++){
-		if(keyword[i] == '*'){
-			prefin = 1;
-			break;
+	if(keyword[0] == '*'){
+		for(int i=0;i<len;i++){
+			if(keyword[len-i-1] == '*') break;
+			else prekey.push_back(keyword[len-i-1]);
 		}
-		if(prefin == 0) prekey.push_back(keyword[i]);
+		for(int i=0;i<prekey.size();i++) cout<<prekey[i];
+		cout<<endl;
+		string sprekey(prekey.begin(), prekey.end());
+		vector<char> revkey(keyword.begin(), keyword.end());
+		reverse(revkey.begin(), revkey.end());
+		string revkeyword(revkey.begin(), revkey.end());
+		result = prefix_wild(rev_root, revkeyword, sprekey);
+	}else{
+		for(int i=0;i<len;i++){
+			if(keyword[i] == '*') break;
+			else prekey.push_back(keyword[i]);
+		}
+		string sprekey(prekey.begin(), prekey.end());
+		result = prefix_wild(root, keyword, sprekey);
 	}
-	string sprekey(prekey.begin(), prekey.end());
-	result = prefix_wild(root, keyword, sprekey);
+	
+	
+	
 	return result;
 }
 
@@ -554,10 +568,14 @@ int main(int argc, char *argv[])
 	}
 
 	q_fi.close();
+	/*for(int i=0;i<queries.size();i++){
+		for(int j=0;j<queries[i].size();j++) cout<<queries[i][j];
+		cout<<endl;
+	}*/
 	// Search for different keys
 	vector<vector<int>> opstack;
 	vector<int> answer;
-	vector<int> v1, v2;
+	vector<int> v1, v2, v3;
 	fstream outputfile;
 	int count = 0;
 	outputfile.open(output.c_str(), ios::out);
@@ -567,7 +585,7 @@ int main(int argc, char *argv[])
 			//cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
 				if(queries[i][j+1][0] == '*') v1 = operate(rev_root, queries[i][j].c_str(), queries[i][j+1].c_str());
-				else if(queries[i][j+1][0] == '<') v1 = wildcard(root, queries[i][j].c_str());
+				else if(queries[i][j+1][0] == '<') v1 = wildcard(root, rev_root, queries[i][j].c_str());
 				else v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v1);
 				j++;
@@ -575,12 +593,18 @@ int main(int argc, char *argv[])
 				while(!v1.empty()) v1.pop_back();
 			}else if(queries[i][j][0] >= 'A' && queries[i][j][0] <= 'Z'){
 				if(queries[i][j+1][0] == '*') v2 = operate(rev_root, queries[i][j].c_str(), queries[i][j+1].c_str());
-				else if(queries[i][j+1][0] == '<') v1 = wildcard(root, queries[i][j].c_str());
+				else if(queries[i][j+1][0] == '<') v2 = wildcard(root, rev_root, queries[i][j].c_str());
 				else v2 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v2);
 				j++;
 				count++;
 				while(!v2.empty()) v2.pop_back();
+			}else if(queries[i][j][0] == '*' && queries[i][j+1][0] == '<'){
+				v3 = wildcard(root, rev_root, queries[i][j].c_str());
+				opstack.push_back(v3);
+				j++;
+				count++;
+				while(!v3.empty()) v3.pop_back();
 			}else if(queries[i][j][0] == '+'){
 				for(int i=0;i<opstack[0].size();i++){
 					auto it = find(opstack[1].begin(), opstack[1].end(), opstack[0][i]);
@@ -637,6 +661,10 @@ int main(int argc, char *argv[])
 			}
 		}
 		while(!opstack.empty()) opstack.pop_back();
+		while(!answer.empty()) answer.pop_back();
+		while(!v1.empty()) v1.pop_back();
+		while(!v2.empty()) v2.pop_back();
+		while(!v3.empty()) v3.pop_back();
 	}
 
 
