@@ -185,6 +185,7 @@ std::vector<int> prefix_search(struct TrieNode* root, string key){
 }
 
 
+
 //operate function
 std::vector<int> operate(struct TrieNode *root, string keyword, string operate_ele){
 	std::vector<int> result;
@@ -198,18 +199,82 @@ std::vector<int> operate(struct TrieNode *root, string keyword, string operate_e
 	}else if(operate_ele[0] == '.'){
 		result = prefix_search(root, keyword);
 	}
-
-	for(int i=0;i<keyword.length();i++){
-		cout<<keyword[i];
-	}
-	cout<<endl;
-	for(int i=0;i<result.size();i++){
-		cout<<"result = "<<result[i]<<" ";
-	}
-	cout<<endl;
 	return result;
 }
 
+std::vector<int> wildsuggestion(struct TrieNode*root, string curPrefix, string postkey, vector<int> curvec){
+	if(root->isEndOfWord == true){
+		int len = postkey.length();
+		bool checked = 0;
+		for(int i=0;i<len;i++) cout<<postkey[i];
+		cout<<endl;
+		cout<<"curPrefix"<<endl;
+		for(int i=0;i<curPrefix.size();i++) cout<<curPrefix[i];
+		cout<<endl;
+		int len2 = curPrefix.length();
+		for(int i=0;i<len;i++){
+			cout<<"pre "<<curPrefix[len2 - i]<<endl;
+			if(postkey[i] != curPrefix[len2 - i]){
+				checked = 1;
+				break;
+			}
+		}
+		if(checked == 0){
+			for(int i=0;i<root->UsedPara.size();i++){
+				auto it = find(curvec.begin(), curvec.end(), root->UsedPara[i]);
+				if(it == curvec.end()) curvec.push_back(root->UsedPara[i]);
+			}
+		}
+	}
+
+	for(int i=0;i<ALPHABET_SIZE;i++){
+		if(root->children[i]){
+			char child = 'a' + i;
+			curvec = wildsuggestion(root->children[i], curPrefix + child, postkey, curvec);
+		}
+	}
+	return curvec;
+}
+
+std::vector<int> prefix_wild(struct TrieNode* root, string key, string postkey){
+	struct TrieNode *pCrawl = root;
+	vector<int> answer;
+
+	for (int i = 0; i < key.length(); i++)
+	{
+		int index;
+		if(key[i]<='Z' && key[i]>='A') index = key[i] - 'A'; //A->0 ... Z->25
+		else if(key[i]<='z' && key[i]>='a') index = key[i] - 'a'; //a -> 26 , z->51
+
+		if (!pCrawl->children[index]){
+			return answer;
+		}
+
+		pCrawl = pCrawl->children[index];
+	}
+
+	vector<int> v = wildsuggestion(pCrawl, key, postkey, answer);
+	return v;
+}
+
+std::vector<int> wildcard(struct TrieNode *root, struct TrieNode *rev_root, string keyword){
+	std::vector<int> result;
+	std::vector<char> prekey;
+	std::vector<char> postkey;
+	bool prefin = 0, postfin = 0;
+	int len = keyword.length();
+	for(int i=0;i<len;i++){
+		if(prefin == 1 && postfin == 1) break;
+		if(keyword[i] == '*') prefin = 1;
+		if(keyword[len-i] == '*') postfin = 1;
+		if(prefin == 0) prekey.push_back(keyword[i]);
+		if(postfin == 0) postkey.push_back(keyword[len-i]);
+	}
+	string sprekey(prekey.begin(), prekey.end());
+	string spostkey(postkey.begin(), postkey.end());
+	result = prefix_wild(root, sprekey, spostkey);
+	return result;
+}
 
 bool isEmpty(TrieNode* root)
 {
@@ -267,7 +332,6 @@ int main(int argc, char *argv[])
     	// Endeavor to read a single number from the file and display it
     	fi.open(filepath.c_str());
 		string dn = dirp->d_name;
-		cout<<"dn "<<dn<<endl;
 		for(int i=0;i<dn.length();i++){
 			if(dn[i] == '.') break;
 			else file_title.push_back(dn[i]- '0');
@@ -490,6 +554,7 @@ int main(int argc, char *argv[])
 			//cout<<queries[i][j]<<" "<<queries[i][j+1]<<endl;
 			if(queries[i][j][0] >= 'a' && queries[i][j][0] <= 'z'){
 				if(queries[i][j+1][0] == '*') v1 = operate(rev_root, queries[i][j].c_str(), queries[i][j+1].c_str());
+				else if(queries[i][j+1][0] == '<') v1 = wildcard(root, rev_root, queries[i][j].c_str());
 				else v1 = operate(root, queries[i][j].c_str(), queries[i][j+1].c_str());
 				opstack.push_back(v1);
 				j++;
