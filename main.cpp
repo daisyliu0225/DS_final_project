@@ -206,14 +206,8 @@ std::vector<int> wildsuggestion(struct TrieNode*root, string curPrefix, string p
 	if(root->isEndOfWord == true){
 		int len = postkey.length();
 		bool checked = 0;
-		for(int i=0;i<len;i++) cout<<postkey[i];
-		cout<<endl;
-		cout<<"curPrefix"<<endl;
-		for(int i=0;i<curPrefix.size();i++) cout<<curPrefix[i];
-		cout<<endl;
 		int len2 = curPrefix.length();
 		for(int i=0;i<len;i++){
-			cout<<"pre "<<curPrefix[len2 - i]<<endl;
 			if(postkey[i] != curPrefix[len2 - i]){
 				checked = 1;
 				break;
@@ -343,7 +337,7 @@ int main(int argc, char *argv[])
 		//cout<<"counter "<<counter<<endl;
 		file_title.clear();
     	getline(fi, title_name);
-		title_table.push_back(make_pair(title_name, counter));
+		if(title_name.length() > 0) title_table.push_back(make_pair(title_name, counter));
 		tmp_string = split(title_name, " ");
 		title = word_parse(tmp_string);
 		for(auto &title_word : title){
@@ -352,6 +346,11 @@ int main(int argc, char *argv[])
 			reverse(rev_word_title.begin(), rev_word_title.end());
 			string rev_title_str(rev_word_title.begin(), rev_word_title.end());
 			insert(rev_root, rev_title_str, counter);
+		}
+
+		for(int i=0;i<title_table.size();i++){
+			cout<<"title_name"<<title_table[i].first<<endl;
+			cout<<"counter"<<title_table[i].second<<endl;
 		}
 
 		while(getline(fi, tmp)){
@@ -370,6 +369,11 @@ int main(int argc, char *argv[])
 
 		}
     	fi.close();
+		title_name.clear();
+		title.clear();
+		tmp_string.clear();
+		content.clear();
+		counter = 0;
     }
   	closedir(dr);
 
@@ -638,7 +642,9 @@ int main(int argc, char *argv[])
 						break;
 					}
 				}
-				for(int j=0;j<title_table[num2].first.size();j++) outputfile<<title_table[num2].first[j];
+				for(int j=0;j<title_table[num2].first.size();j++){
+					outputfile<<title_table[num2].first[j];
+				}
 				outputfile<<endl;
 			}
 		}
