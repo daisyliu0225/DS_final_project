@@ -32,6 +32,7 @@ The engine uses the structure of trie.
 |17-2|2024/01/10|suffix search finished|
 |18-1|2024/01/11|prefix & suffix array finished|
 |19|2024/01/13|making sequence correct|
+|20|2024/01/14|wildcard finished|
 
 ## Cores
 ### Suffix
